@@ -1,16 +1,9 @@
 <div class="row">
     <div class="col-12">
         <ul class="list-group">
-            <li class="list-group-item list-group-item-action clearfix" *ngFor="let recipe of recipiesList">
-                <div class="float-left">
-                    <p>{{recipe.recipeName}}</p>
-                    <p>{{recipe.recipeDescription}}</p>
-                </div>
-
-                <div class="float-right">
-                    <img class="recipe-picture" [src]="recipe.recipeImgUrl" [alt]="recipe.recipeName">
-                </div>
-            </li>
-          </ul>
+            <app-recipe-item *ngFor="let recipe of recipiesList"
+                [recipeData]="recipe"
+                (selectRecipe)="onRecipeSelected(recipe)"></app-recipe-item>
+        </ul>
     </div>
 </div>

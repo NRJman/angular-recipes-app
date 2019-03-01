@@ -7,4 +7,9 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'app';
+  currentComponentName: string = 'recipies';
+
+  onComponentRouted(event: {componentName: string}): void {
+    this.currentComponentName = event.componentName;
+  }
 }

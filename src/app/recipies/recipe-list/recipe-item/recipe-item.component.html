@@ -1,1 +1,12 @@
-<div>recipe item works!</div>
+<li class="list-group-item list-group-item-action clearfix" (click)="onRecipeSelect()">
+    <div class="float-left">
+        <h5>{{recipeData.recipeName}}</h5>
+        <p>{{recipeData.recipeDescription}}</p>
+    </div>
+
+    <div class="float-right">
+        <img class="recipe-picture" 
+            [src]="recipeData.recipeImgUrl" 
+            [alt]="recipeData.recipeName">
+    </div>
+</li>

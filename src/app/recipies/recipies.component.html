@@ -2,10 +2,15 @@
   <div class="col-6">
       <button class="btn btn-success new-recipe-btn">New Recipe</button>
       <hr>
-      <app-recipe-list></app-recipe-list>
+      <app-recipe-list (recipeWasSelected)="onRecipeSelected($event)"></app-recipe-list>
   </div>
 
   <div class="col-6">
-      <app-recipe-detail></app-recipe-detail>
+      <app-recipe-detail [theSelectedRecipe]="selectedRecipe" 
+        *ngIf="selectedRecipe; else recipeDetailDefaultMessage"></app-recipe-detail>
+
+      <ng-template #recipeDetailDefaultMessage>
+        <h5>Select a recipe to show information.</h5>
+      </ng-template>
   </div>
 </div>
