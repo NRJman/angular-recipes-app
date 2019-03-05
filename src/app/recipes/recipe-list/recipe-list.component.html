@@ -2,8 +2,7 @@
     <div class="col-12">
         <ul class="list-group">
             <app-recipe-item *ngFor="let recipe of recipesList"
-                [recipeData]="recipe"
-                (selectRecipe)="onRecipeSelected(recipe)"></app-recipe-item>
+                [recipeData]="recipe"></app-recipe-item>
         </ul>
     </div>
 </div>
