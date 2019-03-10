@@ -19,18 +19,13 @@ export class ShoppingListService {
     onSomeIngredientsAdded(ingredientsToAdd: Ingredient[]): void {
         // this._ingredientsList.push(...ingredientsToAdd);
         for (let i = 0, len = ingredientsToAdd.length; i < len; i++) {
-            let isIngredientFoundInList = false;
+            let indexOfFoundIngredient: number = this.ingredientsList
+                .findIndex((ingredient) => ingredient.name === ingredientsToAdd[i].name);
 
-            for (let j = 0, ingredientsList = this._ingredientsList, len = ingredientsList.length; j < len; j++) {
-                if (ingredientsList[j].name === ingredientsToAdd[i].name) {
-                    ingredientsList[j].amount += ingredientsToAdd[i].amount;
-                    isIngredientFoundInList = true;
-                    break;
-                }
-            }
-
-            if (!isIngredientFoundInList) {
-                this._ingredientsList.push(ingredientsToAdd[i]);
+            if (~indexOfFoundIngredient) {
+                this.ingredientsList[indexOfFoundIngredient].amount += ingredientsToAdd[i].amount;
+            } else {
+                this._ingredientsList.push(new Ingredient(ingredientsToAdd[i].name, ingredientsToAdd[i].amount));
             }
         }
 
