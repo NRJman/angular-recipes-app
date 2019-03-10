@@ -14,7 +14,7 @@ export class ShoppingListEditComponent implements OnInit {
 
   onFormSubmit(nameInput: HTMLInputElement): void {
     const ingredientName = nameInput.value,
-          ingredientAmount = this.amountInput.nativeElement.value,
+          ingredientAmount = +this.amountInput.nativeElement.value,
           newIngredient = new Ingredient(ingredientName, ingredientAmount);
 
     this.shoppingListService.onIngredientAdded(newIngredient);

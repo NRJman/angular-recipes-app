@@ -12,18 +12,25 @@ export class ShoppingListService {
 
     addIngredient = new EventEmitter<{ updatedIngredientsList: Ingredient[] }>();
 
-    onIngredientAdded(ingredient: Ingredient): void {
-        this._ingredientsList.push(ingredient);
+    onIngredientAdded(ingredientToAdd: Ingredient): void {
+        let indexOfFoundIngredient: number = this.ingredientsList
+            .findIndex((listIngredient) => listIngredient.name === ingredientToAdd.name);
+
+        if (~indexOfFoundIngredient) {
+            this._ingredientsList[indexOfFoundIngredient].amount += ingredientToAdd.amount;
+        } else {
+            this._ingredientsList.push(new Ingredient(ingredientToAdd.name, ingredientToAdd.amount));
+        }
     }
 
     onSomeIngredientsAdded(ingredientsToAdd: Ingredient[]): void {
-        // this._ingredientsList.push(...ingredientsToAdd);
+
         for (let i = 0, len = ingredientsToAdd.length; i < len; i++) {
             let indexOfFoundIngredient: number = this.ingredientsList
                 .findIndex((ingredient) => ingredient.name === ingredientsToAdd[i].name);
 
             if (~indexOfFoundIngredient) {
-                this.ingredientsList[indexOfFoundIngredient].amount += ingredientsToAdd[i].amount;
+                this._ingredientsList[indexOfFoundIngredient].amount += ingredientsToAdd[i].amount;
             } else {
                 this._ingredientsList.push(new Ingredient(ingredientsToAdd[i].name, ingredientsToAdd[i].amount));
             }
