@@ -27,6 +27,8 @@ export class ToggleDropdownDirective {
             } else {
                 renderer.removeClass(dropdownListElemRef, 'show');
             }
+        } else if (target.classList.contains('dropdown-item')) {
+            renderer.removeClass(dropdownListElemRef, 'show');
         }
     }
 
