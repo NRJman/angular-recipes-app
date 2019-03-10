@@ -13,7 +13,7 @@ export class ShoppingListService {
     addIngredient = new EventEmitter<{ updatedIngredientsList: Ingredient[] }>();
 
     onIngredientAdded(ingredientToAdd: Ingredient): void {
-        let indexOfFoundIngredient: number = this.ingredientsList
+        const indexOfFoundIngredient: number = this.ingredientsList
             .findIndex((listIngredient) => listIngredient.name === ingredientToAdd.name);
 
         if (~indexOfFoundIngredient) {
@@ -26,7 +26,7 @@ export class ShoppingListService {
     onSomeIngredientsAdded(ingredientsToAdd: Ingredient[]): void {
 
         for (let i = 0, len = ingredientsToAdd.length; i < len; i++) {
-            let indexOfFoundIngredient: number = this.ingredientsList
+            const indexOfFoundIngredient: number = this.ingredientsList
                 .findIndex((ingredient) => ingredient.name === ingredientsToAdd[i].name);
 
             if (~indexOfFoundIngredient) {
