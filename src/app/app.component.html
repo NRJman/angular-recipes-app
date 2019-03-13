@@ -1,7 +1,5 @@
-<app-header (routeToComponent)="onComponentRouted($event)"></app-header>
+<app-header></app-header>
 
 <div class="container">
-    <app-recipes *ngIf="currentComponentName === 'recipes'"></app-recipes>
-
-    <app-shopping *ngIf="currentComponentName === 'shopping-list'"></app-shopping>
+    <router-outlet></router-outlet>
 </div>

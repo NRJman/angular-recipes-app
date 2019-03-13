@@ -10,8 +10,13 @@ import { RecipeListComponent } from './recipes/recipe-list/recipe-list.component
 import { RecipeItemComponent } from './recipes/recipe-list/recipe-item/recipe-item.component';
 import { RecipeDetailComponent } from './recipes/recipe-detail/recipe-detail.component';
 import { RecipesComponent } from './recipes/recipes.component';
+import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component';
+import { RecipesService } from './recipes/recipes.service';
 
 import { ToggleDropdownDirective } from './shared/toggle-dropdown.directive';
+import { AppRoutingModule } from './app-routing.module';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { RecipeStartComponent } from './recipes/recipe-start/recipe-start.component';
 
 @NgModule({
   declarations: [
@@ -24,13 +29,19 @@ import { ToggleDropdownDirective } from './shared/toggle-dropdown.directive';
     RecipeDetailComponent,
     RecipesComponent,
     ShoppingListComponent,
-    ToggleDropdownDirective
+    ToggleDropdownDirective,
+    RecipeEditComponent,
+    PageNotFoundComponent,
+    RecipeStartComponent
   ],
   imports: [
     BrowserModule,
-    FormsModule
+    FormsModule,
+    AppRoutingModule
   ],
-  providers: [],
+  providers: [
+    RecipesService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
