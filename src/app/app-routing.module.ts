@@ -1,4 +1,4 @@
-import { NgModule } from "@angular/core";
+import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { RecipeDetailComponent } from './recipes/recipe-detail/recipe-detail.component';
@@ -11,7 +11,8 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 
 const appRoutes: Routes = [
     { path: 'recipe-book', component: RecipesComponent, children: [
-        { path: ':id/details', component: RecipeDetailComponent },
+        { path: '', redirectTo: 'recipe-start', pathMatch: 'full' },
+        { path: ':id', component: RecipeDetailComponent },
         { path: ':id/edit', component: RecipeEditComponent },
         { path: 'recipe-start', component: RecipeStartComponent }
     ] },
@@ -19,7 +20,7 @@ const appRoutes: Routes = [
     { path: 'shopping-list', component: ShoppingListComponent },
     { path: 'page-not-found', component: PageNotFoundComponent },
     { path: '**', redirectTo: 'page-not-found' }
-]
+];
 
 @NgModule({
     imports: [RouterModule.forRoot(appRoutes)],

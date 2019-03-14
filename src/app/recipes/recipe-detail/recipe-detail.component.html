@@ -13,9 +13,9 @@
               appToggleDropdown
             >Manage Recipe</button>
 
-      <div #dropdownList class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-        <a class="dropdown-item" href="javascript:void(0)" (click)="onRecipeAddToShoppingList()">To shopping list</a>
-        <a class="dropdown-item" href="#">Edit recipe</a>
+      <div #dropdownList class="recipe-controllers dropdown-menu" aria-labelledby="btnGroupDrop1">
+        <a class="dropdown-item" (click)="onRecipeAddToShoppingList()">To shopping list</a>
+        <a class="dropdown-item" (click)="onEditRecipe()">Edit recipe</a>
         <a class="dropdown-item" href="#">Delete recipe</a>
       </div>
     </div>

@@ -1,4 +1,7 @@
-<li class="list-group-item list-group-item-action clearfix" (click)="onRecipeSelect()">
+<a class="list-group-item list-group-item-action recipe-item clearfix"
+   [routerLink]="[recipeId]"
+   routerLinkActive="active"
+>
     <div class="float-left">
         <h5>{{recipeData.recipeName}}</h5>
         <p>{{recipeData.recipeDescription}}</p>
@@ -9,4 +12,4 @@
             [src]="recipeData.recipeImgUrl" 
             [alt]="recipeData.recipeName">
     </div>
-</li>
+</a>
