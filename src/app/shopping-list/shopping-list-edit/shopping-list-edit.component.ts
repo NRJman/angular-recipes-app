@@ -18,7 +18,7 @@ export class ShoppingListEditComponent implements OnInit {
           newIngredient = new Ingredient(ingredientName, ingredientAmount);
 
     this.shoppingListService.onIngredientAdded(newIngredient);
-    this.shoppingListService.addIngredient.emit({ updatedIngredientsList: this.shoppingListService.ingredientsList });
+    this.shoppingListService.addIngredient.next({ updatedIngredientsList: this.shoppingListService.ingredientsList });
   }
 
   ngOnInit() {

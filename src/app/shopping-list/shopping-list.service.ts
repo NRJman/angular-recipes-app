@@ -1,5 +1,6 @@
 import { Ingredient } from '../shared/ingredient.model';
 import { EventEmitter, Injectable } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -10,7 +11,7 @@ export class ShoppingListService {
         new Ingredient('Eggs', 3)
     ];
 
-    addIngredient = new EventEmitter<{ updatedIngredientsList: Ingredient[] }>();
+    addIngredient = new Subject<{ [updatedList: string]: Ingredient[] }>();
 
     onIngredientAdded(ingredientToAdd: Ingredient): void {
         const indexOfFoundIngredient: number = this.ingredientsList
@@ -24,7 +25,6 @@ export class ShoppingListService {
     }
 
     onSomeIngredientsAdded(ingredientsToAdd: Ingredient[]): void {
-
         for (let i = 0, len = ingredientsToAdd.length; i < len; i++) {
             const indexOfFoundIngredient: number = this.ingredientsList
                 .findIndex((ingredient) => ingredient.name === ingredientsToAdd[i].name);
@@ -36,8 +36,7 @@ export class ShoppingListService {
             }
         }
 
-        // Wrong behaviour, never emit events in a service!
-        this.addIngredient.emit({ updatedIngredientsList: this.ingredientsList });
+        this.addIngredient.next({ updatedIngredientsList: this.ingredientsList });
     }
 
     get ingredientsList(): Ingredient[] {
