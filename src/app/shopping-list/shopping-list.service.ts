@@ -12,6 +12,7 @@ export class ShoppingListService {
     ];
 
     addIngredient = new Subject<{ [updatedList: string]: Ingredient[] }>();
+    selectIngredient = new Subject<{ itemIndex: number }>();
 
     onIngredientAdded(ingredientToAdd: Ingredient): void {
         const indexOfFoundIngredient: number = this.ingredientsList
@@ -41,5 +42,9 @@ export class ShoppingListService {
 
     get ingredientsList(): Ingredient[] {
         return this._ingredientsList.slice();
+    }
+
+    getCertainIngredient(index): Ingredient {
+        return this.ingredientsList[index];
     }
 }

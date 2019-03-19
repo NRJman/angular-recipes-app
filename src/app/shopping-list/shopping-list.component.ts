@@ -14,6 +14,10 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
 
   constructor(private shoppingListService: ShoppingListService) { }
 
+  onSelectSubject(selectedItemIndex: number): void {
+    this.shoppingListService.selectIngredient.next({ itemIndex: selectedItemIndex });
+  }
+
   ngOnInit() {
     this.ingredientsList = this.shoppingListService.ingredientsList;
 
