@@ -51,4 +51,8 @@ export class ShoppingListService {
     setCertainIngredient(id: number, updatedIngredientValue: { name: string, amount: number }): void {
         [this._ingredientsList[id].name, this._ingredientsList[id].amount] = [updatedIngredientValue.name, updatedIngredientValue.amount];
     }
+
+    deleteCertainIngredient(id: number): void {
+        this._ingredientsList.splice(id, 1);
+    }
 }

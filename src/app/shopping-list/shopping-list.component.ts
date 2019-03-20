@@ -9,7 +9,7 @@ import { Subscription, SubscriptionLike } from 'rxjs';
   styleUrls: ['./shopping-list.component.css']
 })
 export class ShoppingListComponent implements OnInit, OnDestroy {
-  private updateIngredientsListSubscription: Subscription;
+  private _updateIngredientsListSubscription: Subscription;
   ingredientsList: Ingredient[];
 
   constructor(private shoppingListService: ShoppingListService) { }
@@ -21,13 +21,13 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.ingredientsList = this.shoppingListService.ingredientsList;
 
-    this.updateIngredientsListSubscription = this.shoppingListService.updateIngredientsList.subscribe((data: { updatedIngredientsList: Ingredient[] }) => {
+    this._updateIngredientsListSubscription = this.shoppingListService.updateIngredientsList.subscribe((data: { updatedIngredientsList: Ingredient[] }) => {
       this.ingredientsList = data.updatedIngredientsList;
     });
   }
 
   ngOnDestroy() {
-    this.updateIngredientsListSubscription.unsubscribe();
+    this._updateIngredientsListSubscription.unsubscribe();
   }
 
 }

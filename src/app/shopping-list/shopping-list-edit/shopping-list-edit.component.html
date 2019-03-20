@@ -15,7 +15,7 @@
                             name="recipeItemName"
                             required>
                         
-                        <div class="alert-message" *ngIf="recipeItemName.touched && recipeItemName.errors.required">This field is required.</div>
+                        <div class="alert-message" *ngIf="recipeItemName.touched && recipeItemName.errors?.required">This field is required.</div>
                     </div>
                 </div>
                 
@@ -33,18 +33,18 @@
                             required
                             pattern="^[1-9]+[0-9]*$">
 
-                            <div class="alert-message" *ngIf="recipeItemAmount.touched && recipeItemAmount.errors.required">This field is required.</div>
-                            <div class="alert-message" *ngIf="recipeItemAmount.touched && recipeItemAmount.errors.pattern">The value is invalid.</div>
+                            <div class="alert-message" *ngIf="recipeItemAmount.touched && recipeItemAmount.errors?.required">This field is required.</div>
+                            <div class="alert-message" *ngIf="recipeItemAmount.touched && recipeItemAmount.errors?.pattern">The value is invalid.</div>
                     </div>
                 </div>
             </div>
             
             <div class="row">
                 <div class="col-12" [ngSwitch]="editMode">
-                    <button type="button" class="btn btn-success" *ngSwitchCase="true" (click)="onIngredientUpdate()">Update</button>
-                    <button type="submit" class="btn btn-success" *ngSwitchCase="false">Add</button>
-                    <button type="button" class="btn btn-danger">Delete</button>
-                    <button type="button" class="btn btn-primary">Clear</button>
+                    <button type="button" class="btn btn-success" *ngSwitchCase="true" (click)="onUpdateIngredient()">Update</button>
+                    <button type="submit" class="btn btn-success" *ngSwitchCase="false" [disabled]="shoppingListForm.invalid">Add</button>
+                    <button type="button" class="btn btn-danger" (click)="onDeleteIngredient()">Delete</button>
+                    <button type="button" class="btn btn-primary" (click)="onClearForm()">Clear</button>
                 </div>
             </div>
         </form>

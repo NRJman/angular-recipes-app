@@ -29,7 +29,7 @@ export class ShoppingListEditComponent implements OnInit, OnDestroy {
     console.log(this.shoppingListForm);
   }
 
-  onIngredientUpdate() {
+  onUpdateIngredient(): void {
     this.shoppingListService.setCertainIngredient(
       this.selectedIngredientId,
       {
@@ -37,8 +37,24 @@ export class ShoppingListEditComponent implements OnInit, OnDestroy {
         amount: this.shoppingListForm.value.recipeItemAmount
       }
     );
+
     this.shoppingListService.updateIngredientsList.next({ updatedIngredientsList: this.shoppingListService.ingredientsList });
+    this.exitFromEditMode();
+    this.onClearForm();
+  }
+
+  onDeleteIngredient(): void {
+    this.shoppingListService.deleteCertainIngredient(this.selectedIngredientId);
+    this.shoppingListService.updateIngredientsList.next({ updatedIngredientsList: this.shoppingListService.ingredientsList });
+    this.exitFromEditMode();
+    this.onClearForm();
+  }
+
+  exitFromEditMode(): void {
     this.editMode = false;
+  }
+
+  onClearForm(): void {
     this.shoppingListForm.reset();
   }
 
