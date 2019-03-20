@@ -14,6 +14,7 @@ export class ShoppingListEditComponent implements OnInit, OnDestroy {
   @ViewChild('shoppingListForm') shoppingListForm: NgForm;
   private _selectItemSubscription: Subscription;
   public editMode: boolean = false;
+  public selectedIngredientId: number;
 
   constructor(private shoppingListService: ShoppingListService) { }
 
@@ -23,9 +24,22 @@ export class ShoppingListEditComponent implements OnInit, OnDestroy {
           newIngredient = new Ingredient(ingredientName, ingredientAmount);
 
     this.shoppingListService.onIngredientAdded(newIngredient);
-    this.shoppingListService.addIngredient.next({ updatedIngredientsList: this.shoppingListService.ingredientsList });
+    this.shoppingListService.updateIngredientsList.next({ updatedIngredientsList: this.shoppingListService.ingredientsList });
 
     console.log(this.shoppingListForm);
+  }
+
+  onIngredientUpdate() {
+    this.shoppingListService.setCertainIngredient(
+      this.selectedIngredientId,
+      {
+        name: this.shoppingListForm.value.recipeItemName,
+        amount: this.shoppingListForm.value.recipeItemAmount
+      }
+    );
+    this.shoppingListService.updateIngredientsList.next({ updatedIngredientsList: this.shoppingListService.ingredientsList });
+    this.editMode = false;
+    this.shoppingListForm.reset();
   }
 
   ngOnInit() {
@@ -35,6 +49,7 @@ export class ShoppingListEditComponent implements OnInit, OnDestroy {
         'recipeItemAmount': this.shoppingListService.getCertainIngredient(event.itemIndex).amount
       });
 
+      this.selectedIngredientId = event.itemIndex;
       this.editMode = true;
     });
   }

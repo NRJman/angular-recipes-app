@@ -11,7 +11,7 @@ export class ShoppingListService {
         new Ingredient('Eggs', 3)
     ];
 
-    addIngredient = new Subject<{ [updatedList: string]: Ingredient[] }>();
+    updateIngredientsList = new Subject<{ [updatedList: string]: Ingredient[] }>();
     selectIngredient = new Subject<{ itemIndex: number }>();
 
     onIngredientAdded(ingredientToAdd: Ingredient): void {
@@ -37,14 +37,18 @@ export class ShoppingListService {
             }
         }
 
-        this.addIngredient.next({ updatedIngredientsList: this.ingredientsList });
+        this.updateIngredientsList.next({ updatedIngredientsList: this.ingredientsList });
     }
 
     get ingredientsList(): Ingredient[] {
         return this._ingredientsList.slice();
     }
 
-    getCertainIngredient(index): Ingredient {
+    getCertainIngredient(index: number): Ingredient {
         return this.ingredientsList[index];
+    }
+
+    setCertainIngredient(id: number, updatedIngredientValue: { name: string, amount: number }): void {
+        [this._ingredientsList[id].name, this._ingredientsList[id].amount] = [updatedIngredientValue.name, updatedIngredientValue.amount];
     }
 }
