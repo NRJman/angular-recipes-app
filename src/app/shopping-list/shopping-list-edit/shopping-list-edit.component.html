@@ -4,37 +4,37 @@
             <div class="row">
                 <div class="col-6">
                     <div class="form-group">
-                        <label for="recipeItemName">Name</label>
+                        <label for="ingredientName">Name</label>
                         <input type="text"
                             class="form-control"
-                            id="recipeItemName"
+                            id="ingredientName"
                             placeholder="Recipe Item Name"
                             #nameInput
                             ngModel
-                            #recipeItemName="ngModel"
-                            name="recipeItemName"
+                            #ingredientName="ngModel"
+                            name="ingredientName"
                             required>
                         
-                        <div class="alert-message" *ngIf="recipeItemName.touched && recipeItemName.errors?.required">This field is required.</div>
+                        <div class="alert-message" *ngIf="ingredientName.touched && ingredientName.errors?.required">This field is required.</div>
                     </div>
                 </div>
                 
                 <div class="col-6">
                     <div class="form-group">
-                        <label for="recipeItemAmount">Amount</label>
+                        <label for="ingredientAmount">Amount</label>
                         <input type="number"
                             class="form-control"
-                            id="recipeItemAmount" 
+                            id="ingredientAmount" 
                             placeholder="Recipe Item Amount"
                             #amountInput
                             ngModel
-                            #recipeItemAmount="ngModel"
-                            name="recipeItemAmount"
+                            #ingredientAmount="ngModel"
+                            name="ingredientAmount"
                             required
                             pattern="^[1-9]+[0-9]*$">
 
-                            <div class="alert-message" *ngIf="recipeItemAmount.touched && recipeItemAmount.errors?.required">This field is required.</div>
-                            <div class="alert-message" *ngIf="recipeItemAmount.touched && recipeItemAmount.errors?.pattern">The value is invalid.</div>
+                            <div class="alert-message" *ngIf="ingredientAmount.touched && ingredientAmount.errors?.required">This field is required.</div>
+                            <div class="alert-message" *ngIf="ingredientAmount.touched && ingredientAmount.errors?.pattern">The value is invalid.</div>
                     </div>
                 </div>
             </div>

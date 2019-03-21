@@ -3,6 +3,8 @@ import { RecipesService } from './recipes.service';
 
 import { Recipe } from './recipes.model';
 import { Subscription } from 'rxjs';
+import { registerContentQuery } from '@angular/core/src/render3/instructions';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-recipes',
@@ -14,7 +16,11 @@ export class RecipesComponent implements OnInit, OnDestroy {
   recipesList: Recipe[];
   private selectRecipeSubscription: Subscription;
 
-  constructor(private recipesService: RecipesService) { }
+  constructor(private recipesService: RecipesService, private router: Router, private route: ActivatedRoute) { }
+
+  onNewRecipe() {
+    this.router.navigate(['/recipe-book/new-recipe']);
+  }
 
   ngOnInit() {
     this.selectedRecipe = this.recipesService.selectedRecipe;

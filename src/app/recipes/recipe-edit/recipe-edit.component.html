@@ -1,3 +1,62 @@
-<p>
-  {{ recipe.recipeName }}-recipe-edit works!
-</p>
+<div class="row">
+  <div class="col-12">
+    <form class="recipe-edit-form" [formGroup]="recipeForm">
+      <div class="form-controls">
+        <button class="btn btn-success">Save</button>
+        <button class="btn btn-danger">Cancel</button>
+      </div>
+    
+      <div class="form-group">
+        <label for="recipeName">Name</label>
+        <input
+          type="text"
+          placeholder="Recipe Name"
+          class="form-control"
+          id="recipeName"
+          formControlName="name">
+      </div>
+    
+      <div class="form-group">
+        <label for="imageUrl">Image URL</label>
+        <input
+          type="text"
+          placeholder="Image URL"
+          class="form-control"
+          id="imageUrl"
+          formControlName="imageUrl">
+      </div>
+    
+      <div class="form-group">
+        <label for="recipeDescription">Description</label>
+        <textarea
+          rows="5"
+          class="form-control"
+          id="recipeDescription"
+          formControlName="description"
+        ></textarea>
+      </div>
+    
+      <div class="form-group">
+        <button class="btn btn-success">Add Ingredient</button>
+        
+        <div class="form-group" *ngIf="recipeForm.get('ingredients').controls.length > 0">
+          <label>Ingredients</label>
+      
+          <div class="row" *ngFor="let ingredient of recipeForm.get('ingredients').controls; let i = index;">
+            <div class="col-8">
+              <input type="text" class="form-control" formControlName="i">
+            </div>
+      
+            <div class="col-3">
+              <input type="number" class="form-control" formControlName="i">
+            </div>
+      
+            <div class="col-1">
+              <button class="btn btn-danger">X</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

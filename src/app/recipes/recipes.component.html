@@ -1,11 +1,11 @@
 <div class="row">
-  <div class="col-6">
-      <button class="btn btn-success new-recipe-btn">New Recipe</button>
+  <div class="col-12 col-sm-6">
+      <button class="btn btn-success new-recipe-btn" (click)="onNewRecipe()">New Recipe</button>
       <hr>
       <app-recipe-list [theRecipesList]="recipesList" (recipeWasSelected)="onRecipeSelected($event)"></app-recipe-list>
   </div>
 
-  <div class="col-6">
+  <div class="col-12 col-sm-6">
       <!-- <app-recipe-detail *ngIf="selectedRecipe; else recipeDetailDefaultMessage"></app-recipe-detail>
 
       <ng-template #recipeDetailDefaultMessage>

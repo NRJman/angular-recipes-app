@@ -13,6 +13,7 @@ import { RecipeResolver } from './recipes/recipe-edit/recipe-resolver.service';
 const appRoutes: Routes = [
     { path: 'recipe-book', component: RecipesComponent, children: [
         { path: '', component: RecipeStartComponent },
+        { path: 'new-recipe', component: RecipeEditComponent },
         { path: ':id', component: RecipeDetailComponent },
         { path: ':id/edit', component: RecipeEditComponent, resolve: { recipe: RecipeResolver } }
     ] },

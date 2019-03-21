@@ -33,8 +33,8 @@ export class ShoppingListEditComponent implements OnInit, OnDestroy {
     this.shoppingListService.setCertainIngredient(
       this.selectedIngredientId,
       {
-        name: this.shoppingListForm.value.recipeItemName,
-        amount: this.shoppingListForm.value.recipeItemAmount
+        name: this.shoppingListForm.value.ingredientName,
+        amount: this.shoppingListForm.value.ingredientAmount
       }
     );
 
@@ -61,8 +61,8 @@ export class ShoppingListEditComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this._selectItemSubscription = this.shoppingListService.selectIngredient.subscribe((event: { itemIndex: number }) => {
       this.shoppingListForm.setValue({
-        'recipeItemName': this.shoppingListService.getCertainIngredient(event.itemIndex).name,
-        'recipeItemAmount': this.shoppingListService.getCertainIngredient(event.itemIndex).amount
+        'ingredientName': this.shoppingListService.getCertainIngredient(event.itemIndex).name,
+        'ingredientAmount': this.shoppingListService.getCertainIngredient(event.itemIndex).amount
       });
 
       this.selectedIngredientId = event.itemIndex;
