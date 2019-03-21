@@ -12,13 +12,31 @@ export class RecipeEditComponent implements OnInit {
   public recipe: Recipe;
   public recipeForm: FormGroup;
   private editMode: boolean;
+  private currentRecipeId: number;
 
   constructor(private route: ActivatedRoute) { }
 
+  onAddIngredient() {
+    const ingredientNameControl = new FormControl(null),
+      ingredientAmountControl = new FormControl(1);
+
+    (<FormArray>this.recipeForm.get('ingredients')).push(
+      new FormGroup({
+        'name': new FormControl(null),
+        'amount': new FormControl(1)
+      })
+    );
+  }
+
+  onDeleteIngredient(id: number) {
+    (<FormArray>this.recipeForm.get('ingredients')).controls.splice(id, 1);
+  }
+
   ngOnInit() {
     this.route.data.subscribe((data: Data) => {
-      if (data.recipe) {
-        this.recipe = data.recipe;
+      if (data.recipe.value) {
+        this.recipe = data.recipe.value;
+        this.currentRecipeId = data.recipe.id;
         this.editMode = true;
       } else {
         this.editMode = false;
