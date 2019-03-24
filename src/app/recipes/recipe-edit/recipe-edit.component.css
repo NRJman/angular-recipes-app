@@ -5,3 +5,13 @@
 .form-controls .btn {
     margin-right: .5rem;
 }
+
+input.ng-touched.ng-invalid {
+    border: 1px solid darkred;
+}
+
+.recipe-image {
+    display: block;
+    margin: 1rem auto 0;
+    width: 70%;
+}

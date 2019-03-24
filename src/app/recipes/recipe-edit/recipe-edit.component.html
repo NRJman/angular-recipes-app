@@ -2,7 +2,12 @@
   <div class="col-12">
     <form class="recipe-edit-form" [formGroup]="recipeForm" (ngSubmit)="onSubmitForm()">
       <div class="form-controls">
-        <button type="submit" class="btn btn-success" *ngIf="editMode === true; else createRecipeBtn">Save</button>
+        <button
+          type="submit"
+          class="btn btn-success"
+          *ngIf="editMode === true; else createRecipeBtn"
+          [disabled]="recipeForm.invalid"
+        >Save</button>
         
         <ng-template #createRecipeBtn>
           <button type="submit" class="btn btn-success">Create</button>
@@ -28,7 +33,9 @@
           placeholder="Image URL"
           class="form-control"
           id="imageUrl"
-          formControlName="imageUrl">
+          formControlName="imageUrl"
+          #imageUrl>
+        <img class="recipe-image" *ngIf="recipeForm.get('imageUrl').touched || recipeForm.get('imageUrl').valid" [src]="imageUrl.value" alt="Recipe image">
       </div>
     
       <div class="form-group">

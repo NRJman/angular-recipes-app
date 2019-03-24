@@ -1,3 +1,9 @@
 .recipe-controllers .dropdown-item {
     cursor: pointer;
 }
+
+.recipe-image {
+    display: block;
+    margin: 0 auto 1rem;
+    width: 70%;
+}
