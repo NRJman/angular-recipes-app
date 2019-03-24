@@ -31,12 +31,16 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
     );
   }
 
-  onDeleteIngredient(id: number): void {
+  onDeleteFormIngredient(id: number): void {
     (<FormArray>this.recipeForm.get('ingredients')).controls.splice(id, 1);
   }
 
   onSubmitForm(): void {
     (this.editMode) ? this.modifyExistingRecipe() : this.addNewRecipe();
+  }
+
+  onCancelForm(): void {
+    (this.editMode) ? this.router.navigate(['/recipe-book', this.currentRecipeId]) : this.router.navigate(['/recipe-book']);
   }
 
   addNewRecipe(): void {

@@ -9,21 +9,32 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
   styleUrls: ['./recipe-detail.component.css']
 })
 export class RecipeDetailComponent implements OnInit {
+  private selectedRecipeId: number;
   selectedRecipe: Recipe;
 
-  constructor(private recipesService: RecipesService,
-              private route: ActivatedRoute,
-              private router: Router) { }
+  constructor(
+    private recipesService: RecipesService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) { }
 
   onRecipeAddToShoppingList(): void {
-    this.recipesService.onRecipeAddedToShoppingList(this.selectedRecipe.recipeIngredients);
+    this.recipesService.onRecipeAddedToShoppingList(this.selectedRecipeId);
   }
+
   onEditRecipe(): void {
     this.router.navigate(['./edit'], { relativeTo: this.route });
   }
 
+  onDeleteRecipe(): void {
+    const recipesServiceCopy = this.recipesService;
+    recipesServiceCopy.deleteCertainRecipe(this.selectedRecipeId);
+    recipesServiceCopy.updateRecipesList.next(this.recipesService.recipesList);
+  }
+
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
+      this.selectedRecipeId = params['id'];
       this.selectedRecipe = this.recipesService.recipesList[params['id']];
     });
   }

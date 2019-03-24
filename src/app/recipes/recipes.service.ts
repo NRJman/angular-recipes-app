@@ -34,8 +34,8 @@ export class RecipesService {
         this.selectedRecipe = recipe;
     }
 
-    onRecipeAddedToShoppingList(newIngredientsToAdd: Ingredient[]): void {
-        this.shoppingListService.onSomeIngredientsAdded(newIngredientsToAdd);
+    onRecipeAddedToShoppingList(recipeId: number): void {
+        this.shoppingListService.onSomeIngredientsAdded(this.recipesList[recipeId].recipeIngredients);
     }
 
     modifyCertainRecipe(id: number, updatedRecipeValue: Recipe): void {
@@ -44,6 +44,10 @@ export class RecipesService {
 
     addNewRecipe(newRecipe: Recipe): void {
         this._recipesList.push(newRecipe);
+    }
+
+    deleteCertainRecipe(id: number) {
+        this._recipesList.splice(id, 1);
     }
 
     get selectedRecipe(): Recipe {
