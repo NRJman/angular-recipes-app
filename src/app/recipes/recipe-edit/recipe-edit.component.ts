@@ -1,8 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Recipe } from '../recipes.model';
-import { ActivatedRoute, Data } from '@angular/router';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 import { FormGroup, FormControl, FormArray } from '@angular/forms';
 import { Subscription } from 'rxjs';
+import { RecipesService } from '../recipes.service';
 
 @Component({
   selector: 'app-recipe-edit',
@@ -16,7 +17,7 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
   private currentRecipeId: number;
   private resolverDataSubscription: Subscription;
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(private router: Router, private route: ActivatedRoute, private recipesService: RecipesService) { }
 
   onAddIngredient() {
     const ingredientNameControl = new FormControl(null),
@@ -24,8 +25,8 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
 
     (<FormArray>this.recipeForm.get('ingredients')).push(
       new FormGroup({
-        'name': new FormControl(null),
-        'amount': new FormControl(1)
+        'name': ingredientNameControl,
+        'amount': ingredientAmountControl
       })
     );
   }
@@ -34,11 +35,43 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
     (<FormArray>this.recipeForm.get('ingredients')).controls.splice(id, 1);
   }
 
-  onSubmitForm(): void {  }
+  onSubmitForm(): void {
+    (this.editMode) ? this.modifyExistingRecipe() : this.addNewRecipe();
+  }
+
+  addNewRecipe(): void {
+    const recipesServiceCopy = this.recipesService,
+          recipeFormCopy = this.recipeForm,
+          newRecipe = new Recipe(
+            recipeFormCopy.value['name'],
+            recipeFormCopy.value['description'],
+            recipeFormCopy.value['imageUrl'],
+            recipeFormCopy.value['ingredients']
+          );
+
+    recipesServiceCopy.addNewRecipe(newRecipe);
+    recipesServiceCopy.updateRecipesList.next(recipesServiceCopy.recipesList);
+    this.router.navigate(['/recipe-book']);
+  }
+
+  modifyExistingRecipe(): void {
+    const recipesServiceCopy = this.recipesService,
+          recipeFormCopy = this.recipeForm,
+          updatedRecipe = new Recipe(
+            recipeFormCopy.value['name'],
+            recipeFormCopy.value['description'],
+            recipeFormCopy.value['imageUrl'],
+            recipeFormCopy.value['ingredients']
+          );
+
+    recipesServiceCopy.modifyCertainRecipe(this.currentRecipeId, updatedRecipe);
+    recipesServiceCopy.updateRecipesList.next(recipesServiceCopy.recipesList);
+    this.router.navigate(['/recipe-book', this.currentRecipeId]);
+  }
 
   ngOnInit() {
     this.resolverDataSubscription = this.route.data.subscribe((data: Data) => {
-      if (data.recipe.value) {
+      if (data.hasOwnProperty('recipe')) {
         this.recipe = data.recipe.value;
         this.currentRecipeId = data.recipe.id;
         this.editMode = true;

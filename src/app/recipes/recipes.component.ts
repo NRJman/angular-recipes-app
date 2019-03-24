@@ -3,6 +3,7 @@ import { RecipesService } from './recipes.service';
 
 import { Recipe } from './recipes.model';
 import { Router, ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-recipes',
@@ -10,6 +11,7 @@ import { Router, ActivatedRoute } from '@angular/router';
   styleUrls: ['./recipes.component.css']
 })
 export class RecipesComponent implements OnInit {
+  private updateRecipesListSubscription: Subscription;
   selectedRecipe: Recipe;
   recipesList: Recipe[];
 
@@ -21,6 +23,9 @@ export class RecipesComponent implements OnInit {
 
   ngOnInit() {
     this.recipesList = this.recipesService.recipesList;
+    this.updateRecipesListSubscription = this.recipesService.updateRecipesList.subscribe((newRecipesList) => {
+      this.recipesList = newRecipesList;
+    });
   }
 
 }
