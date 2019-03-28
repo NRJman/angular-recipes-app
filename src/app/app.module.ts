@@ -17,6 +17,7 @@ import { ToggleDropdownDirective } from './shared/toggle-dropdown.directive';
 import { AppRoutingModule } from './app-routing.module';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { RecipeStartComponent } from './recipes/recipe-start/recipe-start.component';
+import { HttpModule } from '@angular/http';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { RecipeStartComponent } from './recipes/recipe-start/recipe-start.compon
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpModule
   ],
   providers: [
     RecipesService

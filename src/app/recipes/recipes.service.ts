@@ -61,4 +61,8 @@ export class RecipesService {
     set selectedRecipe(recipe: Recipe) {
         this._selectedRecipe = recipe;
     }
+
+    set recipesList(newRecipesList: Recipe[]) {
+        this._recipesList = newRecipesList;
+    }
 }
