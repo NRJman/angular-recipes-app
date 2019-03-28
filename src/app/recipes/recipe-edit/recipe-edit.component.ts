@@ -84,10 +84,10 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
         this.editMode = true;
       } else {
         this.editMode = false;
-      }[
-    });            Validators.required,
-            Validators.pattern('^[1-9]+[0-9]*$')
-    this.recipeForm = new FormGroup({          ]
+      }
+    });
+
+    this.recipeForm = new FormGroup({
       'name': new FormControl(null, Validators.required),
       'imageUrl': new FormControl(null, Validators.required),
       'description': new FormControl(null, Validators.required),
