@@ -11,8 +11,8 @@ export class RecipesService {
             'A delicious soup with tomatoes and pepperoni',
             'https://www.maxpixel.net/static/photo/1x/Yellow-Come-Soup-Paprika-Bread-Creamy-Vegan-3262211.jpg',
             [
-                new Ingredient('Tomatoes', 2),
-                new Ingredient('Pepperoni', 3)
+                new Ingredient('Mashroom', 5),
+                new Ingredient('Cream', 7)
             ]
         ),
         new Recipe('Mashroom Cream Soup',
