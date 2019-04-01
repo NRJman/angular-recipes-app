@@ -8,6 +8,8 @@ import { RecipeStartComponent } from './recipes/recipe-start/recipe-start.compon
 import { ShoppingListComponent } from './shopping-list/shopping-list.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { RecipeResolver } from './recipes/recipe-edit/recipe-resolver.service';
+import { SignupComponent } from './auth/signup/signup.component';
+import { SigninComponent } from './auth/signin/signin.component';
 
 
 const appRoutes: Routes = [
@@ -20,6 +22,8 @@ const appRoutes: Routes = [
     { path: '', redirectTo: 'recipe-book', pathMatch: 'full' },
     { path: 'shopping-list', component: ShoppingListComponent },
     { path: 'page-not-found', component: PageNotFoundComponent },
+    { path: 'sign-up', component: SignupComponent },
+    { path: 'sign-in', component: SigninComponent },
     { path: '**', redirectTo: 'page-not-found' }
 ];
 

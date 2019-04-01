@@ -19,7 +19,7 @@ export class HeaderComponent {
 
     onFetchData() {
         const recipesServiceCopy = this.recipesService;
-        
+
         this.recipesServerService.getRecipes().subscribe((data) => {
             recipesServiceCopy.recipesList = data;
             recipesServiceCopy.updateRecipesList.next(recipesServiceCopy.recipesList);
