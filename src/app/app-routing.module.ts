@@ -8,6 +8,7 @@ import { RecipeStartComponent } from './recipes/recipe-start/recipe-start.compon
 import { ShoppingListComponent } from './shopping-list/shopping-list.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { RecipeResolver } from './recipes/recipe-edit/recipe-resolver.service';
+import { CanDeactivateGuard } from './recipes/recipe-edit/can-deactivate.service';
 import { SignupComponent } from './auth/signup/signup.component';
 import { SigninComponent } from './auth/signin/signin.component';
 
@@ -15,9 +16,9 @@ import { SigninComponent } from './auth/signin/signin.component';
 const appRoutes: Routes = [
     { path: 'recipe-book', component: RecipesComponent, children: [
         { path: '', component: RecipeStartComponent },
-        { path: 'new-recipe', component: RecipeEditComponent },
+        { path: 'new-recipe', component: RecipeEditComponent, canDeactivate: [CanDeactivateGuard] },
         { path: ':id', component: RecipeDetailComponent },
-        { path: ':id/edit', component: RecipeEditComponent, resolve: { recipe: RecipeResolver } }
+        { path: ':id/edit', component: RecipeEditComponent, canDeactivate: [CanDeactivateGuard] , resolve: { recipe: RecipeResolver } }
     ] },
     { path: '', redirectTo: 'recipe-book', pathMatch: 'full' },
     { path: 'shopping-list', component: ShoppingListComponent },

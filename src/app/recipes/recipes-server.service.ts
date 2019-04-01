@@ -3,6 +3,7 @@ import { Http, Response } from '@angular/http';
 import { RecipesService } from "./recipes.service";
 import { map, catchError } from 'rxjs/operators';
 import { throwError } from "rxjs";
+import { Recipe } from "./recipes.model";
 
 @Injectable({
     providedIn: 'root'
@@ -13,7 +14,15 @@ export class RecipesServerService {
     getRecipes() {
         return this.http.get('https://angular-recipes-app-database.firebaseio.com/recipes.json')
             .pipe(map((response: Response) => {
-                return response.json();
+                const recipes: Recipe[] = response.json();
+
+                for (const recipe of recipes) {
+                    if (!recipe.recipeIngredients) {
+                        recipe.recipeIngredients = [];
+                    }
+                }
+
+                return recipes;
             }))
             .pipe(catchError(error => {
                 console.log('Error is handled in a service!');

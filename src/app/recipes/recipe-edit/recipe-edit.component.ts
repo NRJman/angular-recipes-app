@@ -2,8 +2,9 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Recipe } from '../recipes.model';
 import { ActivatedRoute, Data, Router } from '@angular/router';
 import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 import { RecipesService } from '../recipes.service';
+import { CanDeactivateGuard } from './can-deactivate.service';
 
 @Component({
   selector: 'app-recipe-edit',
@@ -74,6 +75,11 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
     recipesServiceCopy.modifyCertainRecipe(this.currentRecipeId, updatedRecipe);
     recipesServiceCopy.updateRecipesList.next(recipesServiceCopy.recipesList);
     this.router.navigate(['/recipe-book', this.currentRecipeId]);
+  }
+
+  canDeactivate(): Promise<boolean> | Observable<boolean> | boolean {
+    return (this.recipeForm.dirty) ? confirm(`Are you sure you want to quit?
+All unsaved data will be lost.`) : true;
   }
 
   ngOnInit() {
