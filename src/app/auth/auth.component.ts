@@ -20,7 +20,7 @@ export class AuthComponent implements OnInit {
     const email: string = this.authForm.value.email,
       password: string = this.authForm.value.password;
 
-    this.authService.createUser(email, password);
+    (this.isSignupMode) ? this.authService.createUser(email, password) : this.authService.loginUser(email, password);
   }
 
   initForm(accessType: string): void {
