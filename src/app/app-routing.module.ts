@@ -9,8 +9,8 @@ import { ShoppingListComponent } from './shopping-list/shopping-list.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { RecipeResolver } from './recipes/recipe-edit/recipe-resolver.service';
 import { CanDeactivateGuard } from './recipes/recipe-edit/can-deactivate.service';
-import { SignupComponent } from './auth/signup/signup.component';
-import { SigninComponent } from './auth/signin/signin.component';
+import { AuthComponent } from './auth/auth.component';
+import { AuthTypeResolver } from './auth/auth-type-resolver.service';
 
 
 const appRoutes: Routes = [
@@ -23,8 +23,7 @@ const appRoutes: Routes = [
     { path: '', redirectTo: 'recipe-book', pathMatch: 'full' },
     { path: 'shopping-list', component: ShoppingListComponent },
     { path: 'page-not-found', component: PageNotFoundComponent },
-    { path: 'sign-up', component: SignupComponent },
-    { path: 'sign-in', component: SigninComponent },
+    { path: 'sign/:accessType', component: AuthComponent, resolve: { accessType: AuthTypeResolver } },
     { path: '**', redirectTo: 'page-not-found' }
 ];
 

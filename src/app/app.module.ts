@@ -11,15 +11,14 @@ import { RecipeItemComponent } from './recipes/recipe-list/recipe-item/recipe-it
 import { RecipeDetailComponent } from './recipes/recipe-detail/recipe-detail.component';
 import { RecipesComponent } from './recipes/recipes.component';
 import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component';
+import { AuthComponent } from './auth/auth.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { RecipeStartComponent } from './recipes/recipe-start/recipe-start.component';
 import { RecipesService } from './recipes/recipes.service';
 
 import { ToggleDropdownDirective } from './shared/toggle-dropdown.directive';
 import { AppRoutingModule } from './app-routing.module';
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { RecipeStartComponent } from './recipes/recipe-start/recipe-start.component';
 import { HttpModule } from '@angular/http';
-import { SignupComponent } from './auth/signup/signup.component';
-import { SigninComponent } from './auth/signin/signin.component';
 
 @NgModule({
   declarations: [
@@ -36,8 +35,7 @@ import { SigninComponent } from './auth/signin/signin.component';
     RecipeEditComponent,
     PageNotFoundComponent,
     RecipeStartComponent,
-    SignupComponent,
-    SigninComponent
+    AuthComponent
   ],
   imports: [
     BrowserModule,

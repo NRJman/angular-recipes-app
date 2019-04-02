@@ -1,9 +1,9 @@
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
-import { RecipesService } from "./recipes.service";
+import { RecipesService } from './recipes.service';
 import { map, catchError } from 'rxjs/operators';
-import { throwError } from "rxjs";
-import { Recipe } from "./recipes.model";
+import { throwError } from 'rxjs';
+import { Recipe } from './recipes.model';
 
 @Injectable({
     providedIn: 'root'
