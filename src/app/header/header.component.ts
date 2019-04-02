@@ -3,6 +3,8 @@ import { RecipesServerService } from '../shared/recipes-server.service';
 import { RecipesService } from '../recipes/recipes.service';
 import { Recipe } from '../recipes/recipes.model';
 import { AuthService } from '../auth/auth.service';
+import { Router, ActivatedRoute } from '@angular/router';
+import { AuthGuard } from '../auth/auth-guard.service';
 
 @Component({
     selector: 'app-header',
@@ -13,7 +15,10 @@ export class HeaderComponent {
     constructor(
         private recipesServerService: RecipesServerService,
         private recipesService: RecipesService,
-        private authService: AuthService
+        private authService: AuthService,
+        private router: Router,
+        private route: ActivatedRoute,
+        private authGuard: AuthGuard
     ) { }
 
     onSaveData() {
@@ -29,5 +34,13 @@ export class HeaderComponent {
             recipesServiceCopy.recipesList = data;
             recipesServiceCopy.updateRecipesList.next(recipesServiceCopy.recipesList);
         });
+    }
+
+    onLogout() {
+        this.authService.logoutUser();
+
+        if (!this.authService.isUserAuthenticated()) {
+            this.router.navigate(['/recipe-book']);
+        }
     }
 }

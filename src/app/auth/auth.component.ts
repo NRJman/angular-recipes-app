@@ -20,7 +20,21 @@ export class AuthComponent implements OnInit {
     const email: string = this.authForm.value.email,
       password: string = this.authForm.value.password;
 
-    (this.isSignupMode) ? this.authService.createUser(email, password) : this.authService.loginUser(email, password);
+    if (this.isSignupMode) {
+      this.authService.createUser(email, password);
+      this.router.navigate(['/recipe-book']);
+    } else {
+      const urlToGetBackAfterLogin: string = this.route.snapshot.queryParams['getBackTo'];
+
+      this.authService.loginUser(email, password)
+        .then(() => {
+          if (urlToGetBackAfterLogin) {
+            this.router.navigate([urlToGetBackAfterLogin]);
+          } else {
+            this.router.navigate(['/recipe-book']);
+          }
+        });
+    }
   }
 
   initForm(accessType: string): void {

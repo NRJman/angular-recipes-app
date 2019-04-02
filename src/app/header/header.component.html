@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">Navbar</a>
+    <a class="navbar-brand" href="javascript:void(0)" routerLink="/recipe-book">Navbar</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -42,6 +42,10 @@
                     <a class="dropdown-item" href="javascript:void(0)" (click)="onSaveData()">Save Data</a>
                     <a class="dropdown-item" href="javascript:void(0)" (click)="onFetchData()">Fetch Data</a>
                 </div>
+            </li>
+
+            <li class="nav-item" *ngIf="authService.isUserAuthenticated()">
+                <a class="nav-link" href="javascript:void(0)" (click)="onLogout()">Log out</a>
             </li>
         </ul>
     </div>

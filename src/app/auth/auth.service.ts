@@ -21,20 +21,33 @@ export class AuthService {
             });
     }
 
-    loginUser(email: string, password: string) {
-        firebase.auth().signInWithEmailAndPassword(email, password)
+    loginUser(email: string, password: string): Promise<any> {
+        return firebase.auth().signInWithEmailAndPassword(email, password)
             .then((response) => {
                 console.log('Sign in response:', response);
 
-                // To remember jwt right after the registration
+                // To remember jwt right after the authorization
                 firebase.auth().currentUser.getIdToken()
                     .then((token: string) => {
                         this.jwt = token;
                     });
+
+                return new Promise((resolve, reject) => {
+                    resolve();
+                });
             })
             .catch((error) => {
                 console.log(error);
             });
+    }
+
+    logoutUser(): void {
+        firebase.auth().signOut()
+            .catch((error) => {
+                console.log(error);
+            });
+
+        this.jwt = null;
     }
 
     getToken(): string {

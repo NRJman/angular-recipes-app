@@ -11,14 +11,21 @@ import { RecipeResolver } from './recipes/recipe-edit/recipe-resolver.service';
 import { CanDeactivateGuard } from './recipes/recipe-edit/can-deactivate.service';
 import { AuthComponent } from './auth/auth.component';
 import { AuthTypeResolver } from './auth/auth-type-resolver.service';
+import { AuthGuard } from './auth/auth-guard.service';
 
 
 const appRoutes: Routes = [
     { path: 'recipe-book', component: RecipesComponent, children: [
         { path: '', component: RecipeStartComponent },
-        { path: 'new-recipe', component: RecipeEditComponent, canDeactivate: [CanDeactivateGuard] },
+        { path: 'new-recipe', component: RecipeEditComponent, canActivate: [AuthGuard], canDeactivate: [CanDeactivateGuard] },
         { path: ':id', component: RecipeDetailComponent },
-        { path: ':id/edit', component: RecipeEditComponent, canDeactivate: [CanDeactivateGuard] , resolve: { recipe: RecipeResolver } }
+        {
+            path: ':id/edit',
+            component: RecipeEditComponent,
+            canActivate: [AuthGuard],
+            canDeactivate: [CanDeactivateGuard],
+            resolve: { recipe: RecipeResolver }
+        }
     ] },
     { path: '', redirectTo: 'recipe-book', pathMatch: 'full' },
     { path: 'shopping-list', component: ShoppingListComponent },
