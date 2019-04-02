@@ -16,11 +16,17 @@
         </ul>
 
         <ul class="navbar-nav navbar-right">
-            <li class="nav-item" routerLinkActive>
-                <a class="nav-link" href="javascript:void(0)" routerLink="/sign-up">Register</a>
-            </li>
+            <ng-template [ngIf]="!authService.isUserAuthenticated()">
+                <li class="nav-item" routerLinkActive>
+                    <a class="nav-link" href="javascript:void(0)" [routerLink]="['/sign', 'in']">Login</a>
+                </li>
+                
+                <li class="nav-item" routerLinkActive>
+                    <a class="nav-link" href="javascript:void(0)" [routerLink]="['/sign', 'up']">Register</a>
+                </li>
+            </ng-template>
 
-            <li class="nav-item dropdown">
+            <li class="nav-item dropdown" *ngIf="authService.isUserAuthenticated()">
                 <a class="nav-link dropdown-toggle"
                     href="javascript:void(0)"
                     id="navbarDropdown"
