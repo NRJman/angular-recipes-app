@@ -16,9 +16,7 @@ export class HeaderComponent {
         private recipesServerService: RecipesServerService,
         private recipesService: RecipesService,
         private authService: AuthService,
-        private router: Router,
-        private route: ActivatedRoute,
-        private authGuard: AuthGuard
+        private router: Router
     ) { }
 
     onSaveData() {
