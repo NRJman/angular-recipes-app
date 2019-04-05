@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
-import { RecipesServerService } from '../shared/recipes-server.service';
-import { RecipesService } from '../recipes/recipes.service';
-import { Recipe } from '../recipes/recipes.model';
-import { AuthService } from '../auth/auth.service';
+import { RecipesServerService } from '../../shared/recipes-server.service';
+import { RecipesService } from '../../recipes/recipes.service';
+import { Recipe } from '../../recipes/recipes.model';
+import { AuthService } from '../../auth/auth.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { AuthGuard } from '../auth/auth-guard.service';
 
 @Component({
     selector: 'app-header',

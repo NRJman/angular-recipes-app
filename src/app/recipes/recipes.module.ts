@@ -10,6 +10,7 @@ import { RecipeStartComponent } from './recipe-start/recipe-start.component';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from '../shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { AuthGuard } from '../auth/auth-guard.service';
 
 @NgModule({
     declarations: [
@@ -25,6 +26,9 @@ import { ReactiveFormsModule } from '@angular/forms';
         ReactiveFormsModule,
         SharedModule,
         RecipesRoutingModule
+    ],
+    providers: [
+        AuthGuard
     ]
 })
 export class RecipesModule { }
