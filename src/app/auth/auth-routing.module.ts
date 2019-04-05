@@ -4,7 +4,7 @@ import { AuthComponent } from './auth.component';
 import { AuthTypeResolver } from './auth-type-resolver.service';
 
 const authRoutes: Routes = [
-    { path: 'sign/:accessType', component: AuthComponent, resolve: { accessType: AuthTypeResolver } }
+    { path: '', component: AuthComponent, resolve: { accessType: AuthTypeResolver } }
 ];
 
 @NgModule({
