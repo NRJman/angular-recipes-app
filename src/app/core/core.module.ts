@@ -4,6 +4,8 @@ import { HomeComponent } from '../home/home.component';
 import { PageNotFoundComponent } from '../page-not-found/page-not-found.component';
 import { AppRoutingModule } from '../app-routing.module';
 import { SharedModule } from '../shared/shared.module';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { DataRequestsInterceptor } from '../shared/data-requests.interceptor';
 
 @NgModule({
     declarations: [
@@ -18,6 +20,8 @@ import { SharedModule } from '../shared/shared.module';
     exports: [
         HeaderComponent
     ],
-    providers: []
+    providers: [
+        { provide: HTTP_INTERCEPTORS, useClass: DataRequestsInterceptor, multi: true }
+    ]
 })
 export class CoreModule { }

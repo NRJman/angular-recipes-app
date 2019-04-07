@@ -4,6 +4,7 @@ import { RecipesService } from '../../recipes/recipes.service';
 import { Recipe } from '../../recipes/recipes.model';
 import { AuthService } from '../../auth/auth.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { HttpEvent, HttpEventType } from '@angular/common/http';
 
 @Component({
     selector: 'app-header',
@@ -19,9 +20,11 @@ export class HeaderComponent {
     ) { }
 
     onSaveData() {
-        this.recipesServerService.saveRecipes().subscribe((data: Recipe[]) => {
-            console.log(data);
-        });
+        this.recipesServerService.saveRecipes().subscribe(
+            (response: HttpEvent<Object>) => {
+                console.log(response.type === HttpEventType.Sent);
+            }
+        );
     }
 
     onFetchData() {
