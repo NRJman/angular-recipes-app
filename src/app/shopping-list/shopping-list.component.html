@@ -7,7 +7,7 @@
       <ul class="list-group">
         <li 
           class="list-group-item list-group-item-action" 
-          *ngFor="let ingredient of ingredientsList; let i = index"
+          *ngFor="let ingredient of (shoppingListState | async).ingredientsList; let i = index"
           (click)="onSelectSubject(i)">
           <span>{{ ingredient.name }}</span>
           <span>({{ ingredient.amount }})</span>
