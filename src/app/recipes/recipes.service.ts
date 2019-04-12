@@ -36,10 +36,6 @@ export class RecipesService {
         this.selectedRecipe = recipe;
     }
 
-    onRecipeAddedToShoppingList(recipeId: number): void {
-        this.shoppingListService.onSomeIngredientsAdded(this.recipesList[recipeId].recipeIngredients);
-    }
-
     modifyCertainRecipe(id: number, updatedRecipeValue: Recipe): void {
         this._recipesList[id] = updatedRecipeValue;
     }
