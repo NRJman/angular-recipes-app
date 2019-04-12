@@ -1,12 +1,7 @@
 import { Ingredient } from "src/app/shared/ingredient.model";
 
-interface ShoppingListState {
-    ingredientsList: Ingredient[]
-}
-
-export function handleIngredientAddition(currentState: ShoppingListState, ingredientToAdd: Ingredient): Ingredient[] {
-    const ingredientsList = currentState.ingredientsList.slice(),
-        indexOfFoundIngredient: number = ingredientsList.findIndex(
+export function handleIngredientAddition(ingredientsList: Ingredient[], ingredientToAdd: Ingredient): Ingredient[] {
+        const indexOfFoundIngredient: number = ingredientsList.findIndex(
             (listIngredient) => listIngredient.name === ingredientToAdd.name
         );
 
@@ -18,9 +13,7 @@ export function handleIngredientAddition(currentState: ShoppingListState, ingred
     return [...ingredientsList, new Ingredient(ingredientToAdd.name, ingredientToAdd.amount)];
 }
 
-export function handleSeveralIngredientsAddition(currentState: ShoppingListState, ingredientsToAdd: Ingredient[]): Ingredient[] {
-    const ingredientsList = currentState.ingredientsList.slice();
-
+export function handleSeveralIngredientsAddition(ingredientsList: Ingredient[], ingredientsToAdd: Ingredient[]): Ingredient[] {
     for (let i = 0, len = ingredientsToAdd.length; i < len; i++) {
             const indexOfFoundIngredient: number = ingredientsList.findIndex(
                 (ingredient) => ingredient.name === ingredientsToAdd[i].name
@@ -34,4 +27,8 @@ export function handleSeveralIngredientsAddition(currentState: ShoppingListState
     }
 
     return ingredientsList;
+}
+
+export function handleIngredientDeletion(ingredientsList: Ingredient[], id: number): Ingredient[] {
+    return ingredientsList = ingredientsList.splice(id, 1);
 }

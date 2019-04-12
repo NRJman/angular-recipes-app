@@ -4,7 +4,7 @@ import { ShoppingListService } from '../shopping-list.service';
 import { NgForm } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { AddIngredient } from '../store/shopping-list.actions';
+import { AddIngredient, DeleteIngredient } from '../store/shopping-list.actions';
 
 @Component({
   selector: 'app-shopping-list-edit',
@@ -47,7 +47,7 @@ export class ShoppingListEditComponent implements OnInit, OnDestroy {
   }
 
   onDeleteIngredient(): void {
-    this.shoppingListService.deleteCertainIngredient(this.selectedIngredientId);
+    this.store.dispatch(new DeleteIngredient(this.selectedIngredientId));
     this.shoppingListService.updateIngredientsList.next({ updatedIngredientsList: this.shoppingListService.ingredientsList });
     this.exitFromEditMode();
     this.onClearForm();

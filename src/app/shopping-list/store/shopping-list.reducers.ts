@@ -14,12 +14,17 @@ export function shoppingListReducer(state = initialState, action: ShoppingListAc
         case ShoppingListActions.ADD_INGREDIENT:
             return {
                 ...state,
-                ingredientsList: ShoppingListActionHandlers.handleIngredientAddition(state, action.payload)
+                ingredientsList: ShoppingListActionHandlers.handleIngredientAddition(state.ingredientsList.slice(), action.payload)
             };
         case ShoppingListActions.ADD_SEVERAL_INGREDIENTS:
             return {
                 ...state,
-                ingredientsList: ShoppingListActionHandlers.handleSeveralIngredientsAddition(state, action.payload)
+                ingredientsList: ShoppingListActionHandlers.handleSeveralIngredientsAddition(state.ingredientsList.slice(), action.payload)
+            };
+        case ShoppingListActions.DELETE_INGREDIENT:
+            return {
+                ...state,
+                ingredientsList: ShoppingListActionHandlers.handleIngredientDeletion(state.ingredientsList.slice(), action.payload)
             };
         default:
             return state;
