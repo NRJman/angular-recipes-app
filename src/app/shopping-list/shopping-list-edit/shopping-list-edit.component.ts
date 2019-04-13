@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef, Output, EventEmitter, OnDestr
 import { Ingredient } from './../../shared/ingredient.model';
 import { ShoppingListService } from '../shopping-list.service';
 import { NgForm } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import * as fromShoppingList from './../store/shopping-list.reducers';
 import { AddIngredient, DeleteIngredient, UpdateIngredient } from '../store/shopping-list.actions';
@@ -17,8 +17,8 @@ export class ShoppingListEditComponent implements OnInit, OnDestroy {
   @ViewChild('amountInput') amountInput: ElementRef;
   @ViewChild('shoppingListForm') shoppingListForm: NgForm;
   private _selectItemSubscription: Subscription;
-  public editMode = false;
   public selectedIngredientId: number;
+  public shoppingListState: Observable<fromShoppingList.State> = this.store.select('shoppingList');
 
   constructor(
     private shoppingListService: ShoppingListService,
@@ -40,19 +40,13 @@ export class ShoppingListEditComponent implements OnInit, OnDestroy {
       amount: this.shoppingListForm.value.ingredientAmount
     }));
 
-    this.exitFromEditMode();
     this.onClearForm();
   }
 
   onDeleteIngredient(): void {
     this.store.dispatch(new DeleteIngredient(this.selectedIngredientId));
 
-    this.exitFromEditMode();
     this.onClearForm();
-  }
-
-  exitFromEditMode(): void {
-    this.editMode = false;
   }
 
   onClearForm(): void {
@@ -67,8 +61,6 @@ export class ShoppingListEditComponent implements OnInit, OnDestroy {
             'ingredientName': state.selectedIngredient.name,
             'ingredientAmount': state.selectedIngredient.amount
           });
-
-          this.editMode = state.isEditMode;
         }
       }
     );
