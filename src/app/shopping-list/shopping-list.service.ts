@@ -21,8 +21,4 @@ export class ShoppingListService {
     getCertainIngredient(index: number): Ingredient {
         return this.ingredientsList[index];
     }
-
-    setCertainIngredient(id: number, updatedIngredientValue: { name: string, amount: number }): void {
-        [this._ingredientsList[id].name, this._ingredientsList[id].amount] = [updatedIngredientValue.name, updatedIngredientValue.amount];
-    }
 }

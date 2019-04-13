@@ -4,7 +4,9 @@ import { ShoppingListService } from '../shopping-list.service';
 import { NgForm } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { AddIngredient, DeleteIngredient } from '../store/shopping-list.actions';
+import * as fromShoppingList from './../store/shopping-list.reducers';
+import { AddIngredient, DeleteIngredient, UpdateIngredient } from '../store/shopping-list.actions';
+import { AppState } from 'app.reducers';
 
 @Component({
   selector: 'app-shopping-list-edit',
@@ -15,12 +17,12 @@ export class ShoppingListEditComponent implements OnInit, OnDestroy {
   @ViewChild('amountInput') amountInput: ElementRef;
   @ViewChild('shoppingListForm') shoppingListForm: NgForm;
   private _selectItemSubscription: Subscription;
-  public editMode: boolean = false;
+  public editMode = false;
   public selectedIngredientId: number;
 
   constructor(
     private shoppingListService: ShoppingListService,
-    private store: Store<{ shoppingList: { ingredientsList: Ingredient[] } }>
+    private store: Store<AppState>
   ) { }
 
   onFormSubmit(nameInput: HTMLInputElement): void {
@@ -29,26 +31,22 @@ export class ShoppingListEditComponent implements OnInit, OnDestroy {
           newIngredient = new Ingredient(ingredientName, ingredientAmount);
 
     this.store.dispatch(new AddIngredient(newIngredient));
-    console.log(this.shoppingListForm);
   }
 
   onUpdateIngredient(): void {
-    this.shoppingListService.setCertainIngredient(
-      this.selectedIngredientId,
-      {
-        name: this.shoppingListForm.value.ingredientName,
-        amount: this.shoppingListForm.value.ingredientAmount
-      }
-    );
+    this.store.dispatch(new UpdateIngredient({
+      id: this.selectedIngredientId,
+      name: this.shoppingListForm.value.ingredientName,
+      amount: this.shoppingListForm.value.ingredientAmount
+    }));
 
-    this.shoppingListService.updateIngredientsList.next({ updatedIngredientsList: this.shoppingListService.ingredientsList });
     this.exitFromEditMode();
     this.onClearForm();
   }
 
   onDeleteIngredient(): void {
     this.store.dispatch(new DeleteIngredient(this.selectedIngredientId));
-    this.shoppingListService.updateIngredientsList.next({ updatedIngredientsList: this.shoppingListService.ingredientsList });
+
     this.exitFromEditMode();
     this.onClearForm();
   }
@@ -62,15 +60,18 @@ export class ShoppingListEditComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this._selectItemSubscription = this.shoppingListService.selectIngredient.subscribe((event: { itemIndex: number }) => {
-      this.shoppingListForm.setValue({
-        'ingredientName': this.shoppingListService.getCertainIngredient(event.itemIndex).name,
-        'ingredientAmount': this.shoppingListService.getCertainIngredient(event.itemIndex).amount
-      });
+    this._selectItemSubscription = this.store.select('shoppingList').subscribe(
+      (state: fromShoppingList.State) => {
+        if (state.isEditMode) {
+          this.shoppingListForm.setValue({
+            'ingredientName': state.selectedIngredient.name,
+            'ingredientAmount': state.selectedIngredient.amount
+          });
 
-      this.selectedIngredientId = event.itemIndex;
-      this.editMode = true;
-    });
+          this.editMode = state.isEditMode;
+        }
+      }
+    );
   }
 
   ngOnDestroy() {

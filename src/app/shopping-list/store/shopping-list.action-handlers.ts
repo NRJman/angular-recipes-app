@@ -32,3 +32,19 @@ export function handleSeveralIngredientsAddition(ingredientsList: Ingredient[], 
 export function handleIngredientDeletion(ingredientsList: Ingredient[], id: number): Ingredient[] {
     return ingredientsList = ingredientsList.splice(id, 1);
 }
+
+export function handleIngredientUpdate(
+    ingredientsList: Ingredient[],
+    updatedIngredientInfo: { id: number, name: string, amount: number }
+): Ingredient[] {
+    const ingredientId: number = updatedIngredientInfo.id;
+
+    ingredientsList[ingredientId].name = updatedIngredientInfo.name;
+    ingredientsList[ingredientId].amount = updatedIngredientInfo.amount;
+
+    return ingredientsList;
+}
+
+export function handleIngredientSelection(ingredientsList:  Ingredient[], id: number) {
+    return ingredientsList[id];
+}
