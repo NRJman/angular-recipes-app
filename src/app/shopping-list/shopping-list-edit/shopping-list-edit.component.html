@@ -41,10 +41,40 @@
             
             <div class="row">
                 <div class="col-12" [ngSwitch]="(shoppingListState | async).isEditMode">
-                    <button type="button" class="btn btn-success" *ngSwitchCase="true" (click)="onUpdateIngredient()">Update</button>
-                    <button type="submit" class="btn btn-success" *ngSwitchCase="false" [disabled]="shoppingListForm.invalid">Add</button>
-                    <button type="button" class="btn btn-danger" (click)="onDeleteIngredient()" [disabled]="!(shoppingListState | async).isEditMode">Delete</button>
-                    <button type="button" class="btn btn-primary" (click)="onClearForm()">Clear</button>
+                    <button
+                        type="button"
+                        class="btn btn-success"
+                        *ngSwitchCase="true"
+                        (click)="onUpdateIngredient()"
+                    >Update</button>
+                    
+                    <button
+                        type="submit"
+                        class="btn btn-success"
+                        *ngSwitchCase="false"
+                        [disabled]="shoppingListForm.invalid"
+                    >Add</button>
+                    
+                    <button
+                        type="button"
+                        class="btn btn-danger"
+                        (click)="onDeleteIngredient()"
+                        [disabled]="!(shoppingListState | async).isEditMode"
+                    >Delete</button>
+                    
+                    <button
+                        type="button"
+                        class="btn btn-primary"
+                        (click)="onClearForm()"
+                        [disabled]="!ingredientName.value && !ingredientAmount.value"
+                    >Clear</button>
+                    
+                    <button
+                        type="button"
+                        class="btn btn-secondary"
+                        *ngSwitchCase="true"
+                        (click)="onUnselectIngredient()"
+                    >Cancel</button>
                 </div>
             </div>
         </form>

@@ -34,18 +34,28 @@ export function shoppingListReducer(state = initialState, action: ShoppingListAc
         case ShoppingListActions.DELETE_INGREDIENT:
             return {
                 ...state,
-                ingredientsList: ShoppingListActionHandlers.handleIngredientDeletion(ingredientsList, action.payload)
+                ingredientsList: ShoppingListActionHandlers.handleIngredientDeletion(ingredientsList, action.payload),
+                selectedIngredient: null,
+                isEditMode: false
             };
         case ShoppingListActions.UPDATE_INGREDIENT:
             return {
                 ...state,
-                ingredientsList: ShoppingListActionHandlers.handleIngredientUpdate(ingredientsList, action.payload)
+                ingredientsList: ShoppingListActionHandlers.handleIngredientUpdate(ingredientsList, action.payload),
+                selectedIngredient: null,
+                isEditMode: false
             };
         case ShoppingListActions.SELECT_INGREDIENT:
             return {
                 ...state,
                 selectedIngredient: ShoppingListActionHandlers.handleIngredientSelection(ingredientsList, action.payload),
                 isEditMode: true
+            };
+        case ShoppingListActions.DISABLE_EDIT_MODE:
+            return {
+                ...state,
+                selectedIngredient: null,
+                isEditMode: false
             };
         default:
             return state;

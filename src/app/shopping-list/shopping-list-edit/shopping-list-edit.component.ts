@@ -5,7 +5,7 @@ import { NgForm } from '@angular/forms';
 import { Subscription, Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import * as fromShoppingList from './../store/shopping-list.reducers';
-import { AddIngredient, DeleteIngredient, UpdateIngredient } from '../store/shopping-list.actions';
+import { AddIngredient, DeleteIngredient, UpdateIngredient, DisableEditMode } from '../store/shopping-list.actions';
 import { AppState } from 'app.reducers';
 
 @Component({
@@ -51,9 +51,16 @@ export class ShoppingListEditComponent implements OnInit, OnDestroy {
 
   onClearForm(): void {
     this.shoppingListForm.reset();
+    console.log(this.shoppingListForm);
+  }
+
+  onUnselectIngredient(): void {
+    this.onClearForm();
+    this.store.dispatch(new DisableEditMode());
   }
 
   ngOnInit() {
+    console.log(this.shoppingListForm);
     this._selectItemSubscription = this.store.select('shoppingList').subscribe(
       (state: fromShoppingList.State) => {
         if (state.isEditMode) {
@@ -68,6 +75,7 @@ export class ShoppingListEditComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this._selectItemSubscription.unsubscribe();
-  }
 
+    this.store.dispatch(new DisableEditMode());
+  }
 }

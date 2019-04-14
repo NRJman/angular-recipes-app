@@ -6,6 +6,7 @@ export const ADD_SEVERAL_INGREDIENTS = 'ADD_SEVERAL_INGREDIENTS';
 export const DELETE_INGREDIENT = 'DELETE_INGREDIENT';
 export const UPDATE_INGREDIENT = 'UPDATE_INGREDIENT';
 export const SELECT_INGREDIENT = 'SELECT_INGREDIENT';
+export const DISABLE_EDIT_MODE = 'DISABLE_EDIT_MODE';
 
 export class AddIngredient implements Action {
     readonly type = ADD_INGREDIENT;
@@ -32,9 +33,14 @@ export class SelectIngredient implements Action {
     constructor(public payload: number) { }
 }
 
+export class DisableEditMode implements Action {
+    readonly type = DISABLE_EDIT_MODE;
+}
+
 export type Actions =
     AddIngredient |
     AddSeveralIngredients |
     DeleteIngredient |
     UpdateIngredient |
-    SelectIngredient;
+    SelectIngredient |
+    DisableEditMode;
