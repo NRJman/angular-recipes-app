@@ -19,7 +19,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     public isAuthenticated: boolean;
     private isAuthenticatedSubscription: Subscription;
 
-
     constructor(
         private recipesServerService: RecipesServerService,
         private recipesService: RecipesService,
