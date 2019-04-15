@@ -58,8 +58,4 @@ export class AuthService {
 
         return this.jwt;
     }
-
-    isUserAuthenticated(): boolean {
-        return this.jwt != null;
-    }
 }

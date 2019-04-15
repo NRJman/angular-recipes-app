@@ -10,7 +10,6 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./auth.component.css']
 })
 export class AuthComponent implements OnInit {
-  private routeParamsSubscription: Subscription;
   public isSignupMode: boolean;
   public authForm: FormGroup;
 

@@ -1,22 +1,31 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { RecipesServerService } from '../../shared/recipes-server.service';
 import { RecipesService } from '../../recipes/recipes.service';
-import { Recipe } from '../../recipes/recipes.model';
 import { AuthService } from '../../auth/auth.service';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { HttpEvent, HttpEventType } from '@angular/common/http';
+import * as fromApp from 'src/app/store/app.reducers';
+import * as fromAuth from 'src/app/auth/store/auth.reducers';
+import { Store } from '@ngrx/store';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-header',
     templateUrl: './header.component.html',
     styleUrls: ['./header.component.css']
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit, OnDestroy {
+    public authState: Observable<fromAuth.State> = this.store.select('auth');
+    public isAuthenticated: boolean;
+    private isAuthenticatedSubscription: Subscription;
+
+
     constructor(
         private recipesServerService: RecipesServerService,
         private recipesService: RecipesService,
         private authService: AuthService,
-        private router: Router
+        private router: Router,
+        public store: Store<fromApp.State>
     ) { }
 
     onSaveData() {
@@ -39,8 +48,18 @@ export class HeaderComponent {
     onLogout() {
         this.authService.logoutUser();
 
-        if (!this.authService.isUserAuthenticated()) {
+        if (!this.isAuthenticated) {
             this.router.navigate(['/recipe-book']);
         }
+    }
+
+    ngOnInit() {
+        this.isAuthenticatedSubscription = this.authState.subscribe((authState: fromAuth.State) => {
+            this.isAuthenticated = authState.isAuthenticated;
+        });
+    }
+
+    ngOnDestroy() {
+        this.isAuthenticatedSubscription.unsubscribe();
     }
 }

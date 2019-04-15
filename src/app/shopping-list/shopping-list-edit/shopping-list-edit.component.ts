@@ -6,7 +6,7 @@ import { Subscription, Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import * as fromShoppingList from './../store/shopping-list.reducers';
 import { AddIngredient, DeleteIngredient, UpdateIngredient, DisableEditMode } from '../store/shopping-list.actions';
-import { AppState } from 'app.reducers';
+import * as fromApp from 'src/app/store/app.reducers';
 
 @Component({
   selector: 'app-shopping-list-edit',
@@ -22,7 +22,7 @@ export class ShoppingListEditComponent implements OnInit, OnDestroy {
 
   constructor(
     private shoppingListService: ShoppingListService,
-    private store: Store<AppState>
+    private store: Store<fromApp.State>
   ) { }
 
   onFormSubmit(nameInput: HTMLInputElement): void {
