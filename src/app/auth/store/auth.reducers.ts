@@ -1,5 +1,4 @@
-import { Action } from "@ngrx/store";
-import * as fromAuthActions from "./auth.actions";
+import * as fromAuthActions from './auth.actions';
 
 export interface State {
     isAuthenticated: boolean;

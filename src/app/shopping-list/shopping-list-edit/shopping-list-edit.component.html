@@ -33,8 +33,8 @@
                             required
                             pattern="^[1-9]+[0-9]*$">
 
-                            <div class="alert-message" *ngIf="ingredientAmount.touched && ingredientAmount.errors?.required">This field is required.</div>
-                            <div class="alert-message" *ngIf="ingredientAmount.touched && ingredientAmount.errors?.pattern">The value is invalid.</div>
+                        <div class="alert-message" *ngIf="ingredientAmount.touched && ingredientAmount.errors?.required">This field is required.</div>
+                        <div class="alert-message" *ngIf="ingredientAmount.touched && ingredientAmount.errors?.pattern">The value is invalid.</div>
                     </div>
                 </div>
             </div>
