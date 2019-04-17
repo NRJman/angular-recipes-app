@@ -2,7 +2,10 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService } from './auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import * as fromAuth from './../auth/store/auth.reducers';
 import { Subscription } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { StartSignUp } from './store/auth.actions';
 
 @Component({
   selector: 'app-auth',
@@ -13,15 +16,21 @@ export class AuthComponent implements OnInit {
   public isSignupMode: boolean;
   public authForm: FormGroup;
 
-  constructor(private authService: AuthService, private router: Router, private route: ActivatedRoute) { }
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private store: Store<fromAuth.State>
+  ) { }
 
   onSubmit(): void {
     const email: string = this.authForm.value.email,
       password: string = this.authForm.value.password;
 
     if (this.isSignupMode) {
-      this.authService.createUser(email, password);
-      this.router.navigate(['/recipe-book']);
+      const formData = { email, password };
+
+      this.store.dispatch(new StartSignUp(formData));
     } else {
       const urlToGetBackAfterLogin: string = this.route.snapshot.queryParams['getBackTo'];
 

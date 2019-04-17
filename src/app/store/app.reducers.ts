@@ -11,3 +11,4 @@ export const reducers: ActionReducerMap<State> = {
     shoppingList: fromShoppingList.shoppingListReducer,
     auth: fromAuth.authReducer
 }
+
