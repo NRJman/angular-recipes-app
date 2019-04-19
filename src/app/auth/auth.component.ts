@@ -1,11 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { AuthService } from './auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import * as fromAuth from './../auth/store/auth.reducers';
-import { Subscription } from 'rxjs';
+import * as fromAuth from './store/auth.reducers';
+import * as fromAuthActions from './store/auth.actions';
 import { Store } from '@ngrx/store';
-import { StartSignUp } from './store/auth.actions';
 
 @Component({
   selector: 'app-auth',
@@ -17,31 +15,19 @@ export class AuthComponent implements OnInit {
   public authForm: FormGroup;
 
   constructor(
-    private authService: AuthService,
     private router: Router,
     private route: ActivatedRoute,
     private store: Store<fromAuth.State>
   ) { }
 
   onSubmit(): void {
-    const email: string = this.authForm.value.email,
-      password: string = this.authForm.value.password;
+    const formData = { email: this.authForm.value.email, password: this.authForm.value.password };
 
     if (this.isSignupMode) {
-      const formData = { email, password };
-
-      this.store.dispatch(new StartSignUp(formData));
+      this.store.dispatch(new fromAuthActions.StartSignUp(formData));
     } else {
-      const urlToGetBackAfterLogin: string = this.route.snapshot.queryParams['getBackTo'];
-
-      this.authService.loginUser(email, password)
-        .then(() => {
-          if (urlToGetBackAfterLogin) {
-            this.router.navigate([urlToGetBackAfterLogin]);
-          } else {
-            this.router.navigate(['/recipe-book']);
-          }
-        });
+      // const urlToGetBackAfterLogin: string = this.route.snapshot.queryParams['getBackTo'];
+      this.store.dispatch(new fromAuthActions.StartSignIn(formData));
     }
   }
 

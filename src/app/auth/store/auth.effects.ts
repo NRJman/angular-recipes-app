@@ -25,11 +25,11 @@ export class AuthEffects {
                         switchMap((token: string) => {
                             return [
                                 {
-                                    type: fromAuthActions.SIGN_UP
-                                },
-                                {
                                     type: fromAuthActions.SET_TOKEN,
                                     payload: token
+                                },
+                                {
+                                    type: fromAuthActions.SIGN_UP
                                 },
                                 {
                                     type: fromAuthActions.NAVIGATE,
@@ -53,6 +53,9 @@ export class AuthEffects {
     navigate$ = this.actions$
         .pipe(
             ofType(fromAuthActions.NAVIGATE),
+            map((action: fromAuthActions.FailAuth) => {
+                return action.payload;
+            }),
             tap((url: string) => {
                 this.router.navigate([`/${url}`]);
             })
@@ -67,7 +70,73 @@ export class AuthEffects {
             tap((error) => {
                 console.log(error);
             })
-        )
+        );
+
+    @Effect()
+    signIn$ = this.actions$
+        .pipe(
+            ofType(fromAuthActions.START_SIGN_IN),
+            map((action: fromAuthActions.StartSignIn) => {
+                return action.payload;
+            }),
+            switchMap((formData: fromAuthActions.FormData) => {
+                return from(firebase.auth().signInWithEmailAndPassword(formData.email, formData.password))
+                    .pipe(
+                        switchMap(() => {
+                            return firebase.auth().currentUser.getIdToken()
+                        }),
+                        switchMap((token: string) => {
+                            return [
+                                {
+                                    type: fromAuthActions.SET_TOKEN,
+                                    payload: token
+                                },
+                                {
+                                    type: fromAuthActions.SIGN_IN
+                                },
+                                {
+                                    type: fromAuthActions.NAVIGATE,
+                                    payload: 'recipe-book'
+                                }
+                            ]
+                        }),
+                        catchError((error) => {
+                            return of({
+                                type: fromAuthActions.FAIL_AUTH,
+                                payload: error
+                            });
+                        })
+                    );
+            }),
+        );
+
+    @Effect()
+    signOut$ = this.actions$
+        .pipe(
+            ofType(fromAuthActions.START_SIGN_OUT),
+            switchMap(() => {
+                return from(firebase.auth().signOut())
+                    .pipe(
+                        switchMap(() => {
+                            return [
+                                {
+                                    type: fromAuthActions.SIGN_OUT
+                                },
+                                {
+                                    type: fromAuthActions.NAVIGATE,
+                                    payload: 'recipe-book'
+                                }
+                            ];
+                        }),
+                        catchError((error) => {
+                            return of({
+                                type: fromAuthActions.FAIL_AUTH,
+                                payload: error
+                            });
+                        })
+                    );
+            })
+        );
 
     constructor(private actions$: Actions, private router: Router) { }
 }

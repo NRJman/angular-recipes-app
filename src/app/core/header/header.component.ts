@@ -1,13 +1,13 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { RecipesServerService } from '../../shared/recipes-server.service';
 import { RecipesService } from '../../recipes/recipes.service';
-import { AuthService } from '../../auth/auth.service';
 import { Router } from '@angular/router';
 import { HttpEvent, HttpEventType } from '@angular/common/http';
 import * as fromApp from 'src/app/store/app.reducers';
 import * as fromAuth from 'src/app/auth/store/auth.reducers';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
+import { StartSignOut } from 'src/app/auth/store/auth.actions';
 
 @Component({
     selector: 'app-header',
@@ -22,7 +22,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     constructor(
         private recipesServerService: RecipesServerService,
         private recipesService: RecipesService,
-        private authService: AuthService,
         private router: Router,
         public store: Store<fromApp.State>
     ) { }
@@ -45,11 +44,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }
 
     onLogout() {
-        this.authService.logoutUser();
-
-        if (!this.isAuthenticated) {
-            this.router.navigate(['/recipe-book']);
-        }
+        this.store.dispatch(new StartSignOut());
     }
 
     ngOnInit() {

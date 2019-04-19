@@ -4,13 +4,12 @@ import { RecipesService } from '../recipes/recipes.service';
 import { map, catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import { Recipe } from '../recipes/recipes.model';
-import { AuthService } from '../auth/auth.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class RecipesServerService {
-    constructor(private http: HttpClient, private recipesService: RecipesService, private authService: AuthService) { }
+    constructor(private http: HttpClient, private recipesService: RecipesService) { }
 
     getRecipes() {
         return this.http.get<Recipe[]>('https://angular-recipes-app-database.firebaseio.com/recipes.json', {
