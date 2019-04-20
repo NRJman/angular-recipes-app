@@ -1,8 +1,8 @@
 <div class="row">
   <div class="col-12">
-    <h2>{{selectedRecipe.recipeName}}</h2>
+    <h2>{{(recipesState | async).recipes.selectedRecipe.recipeName}}</h2>
 
-    <img class="recipe-image" [src]="selectedRecipe.recipeImgUrl" alt="Recipe image">
+    <img class="recipe-image" [src]="(recipesState | async).recipes.selectedRecipe.recipeImgUrl" alt="Recipe image">
     
     <div class="btn-group" role="group">
       <button 
@@ -23,10 +23,13 @@
       </div>
     </div>
 
-    <div>{{selectedRecipe.recipeDescription}}</div>
+    <div>{{(recipesState | async).recipes.selectedRecipe.recipeDescription}}</div>
     
     <ul class="list-group">
-      <li class="list-group-item" *ngFor="let ingredient of selectedRecipe.recipeIngredients">{{ ingredient.name }}({{ ingredient.amount }})</li>
+      <li
+        class="list-group-item"
+        *ngFor="let ingredient of (recipesState | async).recipes.selectedRecipe.recipeIngredients"
+      >{{ ingredient.name }}({{ ingredient.amount }})</li>
     </ul>
   </div>
 </div>

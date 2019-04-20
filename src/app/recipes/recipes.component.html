@@ -2,7 +2,7 @@
   <div class="col-12 col-sm-6">
       <button class="btn btn-success new-recipe-btn" (click)="onNewRecipe()">New Recipe</button>
       <hr>
-      <app-recipe-list [theRecipesList]="recipesList" (recipeWasSelected)="onRecipeSelected($event)"></app-recipe-list>
+      <app-recipe-list (recipeWasSelected)="onRecipeSelected($event)"></app-recipe-list>
   </div>
 
   <div class="col-12 col-sm-6">

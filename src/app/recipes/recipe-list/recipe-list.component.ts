@@ -1,5 +1,9 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { Recipe } from './../recipes.model';
+import { Store } from '@ngrx/store';
+import * as fromRecipes from './../store/recipes.reducers';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-recipe-list',
@@ -7,9 +11,12 @@ import { Recipe } from './../recipes.model';
   styleUrls: ['./recipe-list.component.css']
 })
 export class RecipeListComponent implements OnInit {
-  @Input('theRecipesList') recipesList: Recipe[];
+  public recipesState: Observable<fromRecipes.State>;
+  public recipesList: Recipe[];
 
-  constructor() {}
+  constructor(private store: Store<fromRecipes.FeatureState>) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.recipesState = this.store.select('recipes');
+  }
 }

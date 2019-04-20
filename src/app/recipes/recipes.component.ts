@@ -10,22 +10,13 @@ import { Subscription } from 'rxjs';
   templateUrl: './recipes.component.html',
   styleUrls: ['./recipes.component.css']
 })
-export class RecipesComponent implements OnInit {
-  private updateRecipesListSubscription: Subscription;
+export class RecipesComponent {
   selectedRecipe: Recipe;
-  recipesList: Recipe[];
 
-  constructor(private recipesService: RecipesService, private router: Router, private route: ActivatedRoute) { }
+  constructor(private router: Router) { }
 
   onNewRecipe() {
     this.router.navigate(['/recipe-book/new-recipe']);
-  }
-
-  ngOnInit() {
-    this.recipesList = this.recipesService.recipesList;
-    this.updateRecipesListSubscription = this.recipesService.updateRecipesList.subscribe((newRecipesList) => {
-      this.recipesList = newRecipesList;
-    });
   }
 
 }
