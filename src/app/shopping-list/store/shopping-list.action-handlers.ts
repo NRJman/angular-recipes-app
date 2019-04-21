@@ -1,35 +1,38 @@
 import { Ingredient } from 'src/app/shared/ingredient.model';
 
-export function handleIngredientAddition(ingredientsList: Ingredient[], ingredientToAdd: Ingredient): Ingredient[] {
-        const indexOfFoundIngredient: number = ingredientsList.findIndex(
-            (listIngredient) => listIngredient.name === ingredientToAdd.name
-        );
+export function handleIngredientAdding(ingredientsList: Ingredient[], ingredientsToAdd: Ingredient[]): Ingredient[] {
+    if (ingredientsToAdd.length === 1) {
+        const ingredientToAdd = ingredientsToAdd[0],
+            indexOfFoundIngredient: number = ingredientsList.findIndex(
+                (ingredient) => ingredient.name === ingredientToAdd.name
+            );
 
-    if (~indexOfFoundIngredient) {
-        ingredientsList[indexOfFoundIngredient].amount += ingredientToAdd.amount;
-        return ingredientsList;
-    }
+        if (~indexOfFoundIngredient) {
+            ingredientsList[indexOfFoundIngredient].amount += ingredientToAdd.amount;
+            return ingredientsList;
+        }
 
-    return [...ingredientsList, new Ingredient(ingredientToAdd.name, ingredientToAdd.amount)];
-}
-
-export function handleSeveralIngredientsAddition(ingredientsList: Ingredient[], ingredientsToAdd: Ingredient[]): Ingredient[] {
-    for (let i = 0, len = ingredientsToAdd.length; i < len; i++) {
+        return [...ingredientsList, new Ingredient(ingredientToAdd.name, ingredientToAdd.amount)];
+    } else if (ingredientsToAdd.length > 1) {
+        for (let i = 0, len = ingredientsToAdd.length; i < len; i++) {
             const indexOfFoundIngredient: number = ingredientsList.findIndex(
                 (ingredient) => ingredient.name === ingredientsToAdd[i].name
             );
 
-        if (~indexOfFoundIngredient) {
-            ingredientsList[indexOfFoundIngredient].amount += ingredientsToAdd[i].amount;
-        } else {
-            ingredientsList.push(new Ingredient(ingredientsToAdd[i].name, ingredientsToAdd[i].amount));
+            if (~indexOfFoundIngredient) {
+                ingredientsList[indexOfFoundIngredient].amount += ingredientsToAdd[i].amount;
+            } else {
+                ingredientsList.push(new Ingredient(ingredientsToAdd[i].name, ingredientsToAdd[i].amount));
+            }
         }
+
+        return ingredientsList;
     }
 
-    return ingredientsList;
+    throw(new Error('The length of ingredientsToAdd array is less than 1.'));
 }
 
-export function handleIngredientDeletion(ingredientsList: Ingredient[], id: number): Ingredient[] {
+export function handleIngredientDeleting(ingredientsList: Ingredient[], id: number): Ingredient[] {
     return ingredientsList = ingredientsList.splice(id, 1);
 }
 
@@ -45,6 +48,6 @@ export function handleIngredientUpdate(
     return ingredientsList;
 }
 
-export function handleIngredientSelection(ingredientsList:  Ingredient[], id: number) {
+export function handleIngredientSelecting(ingredientsList:  Ingredient[], id: number) {
     return ingredientsList[id];
 }

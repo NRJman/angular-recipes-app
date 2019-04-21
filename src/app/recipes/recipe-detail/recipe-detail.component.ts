@@ -3,10 +3,10 @@ import { Recipe } from '../recipes.model';
 import { RecipesService } from './../recipes.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { AddSeveralIngredients } from './../../shopping-list/store/shopping-list.actions';
 import * as fromApp from 'src/app/store/app.reducers';
 import * as fromRecipes from './../store/recipes.reducers';
 import * as RecipesActions from './../store/recipes.actions';
+import * as ShoppingListActions from './../../shopping-list/store/shopping-list.actions';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -27,7 +27,7 @@ export class RecipeDetailComponent implements OnInit {
   ) { }
 
   onRecipeAddToShoppingList(): void {
-    this.store.dispatch(new AddSeveralIngredients(this.recipesService.recipesList[this.selectedRecipeId].recipeIngredients));
+    this.store.dispatch(new ShoppingListActions.TryToAddIngredients(this.selectedRecipeId));
   }
 
   onEditRecipe(): void {
@@ -35,9 +35,7 @@ export class RecipeDetailComponent implements OnInit {
   }
 
   onDeleteRecipe(): void {
-    const recipesServiceCopy = this.recipesService;
-    recipesServiceCopy.deleteCertainRecipe(this.selectedRecipeId);
-    recipesServiceCopy.updateRecipesList.next(this.recipesService.recipesList);
+    this.store.dispatch(new RecipesActions.DeleteRecipe(this.selectedRecipeId));
   }
 
   ngOnInit() {

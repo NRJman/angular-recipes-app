@@ -5,6 +5,9 @@ import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
 import { Subscription, Observable } from 'rxjs';
 import { RecipesService } from '../recipes.service';
 import { CanDeactivateGuard } from './can-deactivate.service';
+import { Store } from '@ngrx/store';
+import * as fromRecipes from './../store/recipes.reducers';
+import * as RecipesActions from './../store/recipes.actions';
 
 @Component({
   selector: 'app-recipe-edit',
@@ -18,7 +21,12 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
   private currentRecipeId: number;
   private resolverDataSubscription: Subscription;
 
-  constructor(private router: Router, private route: ActivatedRoute, private recipesService: RecipesService) { }
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private recipesService: RecipesService,
+    private store: Store<fromRecipes.FeatureState>
+  ) { }
 
   onAddIngredient() {
     const ingredientNameControl = new FormControl(null, Validators.required),
@@ -57,9 +65,8 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
             recipeFormCopy.value['ingredients']
           );
 
-    recipesServiceCopy.addNewRecipe(newRecipe);
-    recipesServiceCopy.updateRecipesList.next(recipesServiceCopy.recipesList);
-    this.router.navigate(['/recipe-book']);
+    this.store.dispatch(new RecipesActions.AddRecipe(newRecipe));
+    // this.router.navigate(['/recipe-book']);
   }
 
   modifyExistingRecipe(): void {
@@ -72,9 +79,8 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
             recipeFormCopy.value['ingredients']
           );
 
-    recipesServiceCopy.modifyCertainRecipe(this.currentRecipeId, updatedRecipe);
-    recipesServiceCopy.updateRecipesList.next(recipesServiceCopy.recipesList);
-    this.router.navigate(['/recipe-book', this.currentRecipeId]);
+    this.store.dispatch(new RecipesActions.ModifyRecipe({ id: this.currentRecipeId, newRecipeValue: updatedRecipe }));
+    // this.router.navigate(['/recipe-book', this.currentRecipeId]);
   }
 
   canDeactivate(): Promise<boolean> | Observable<boolean> | boolean {

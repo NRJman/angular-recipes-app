@@ -4,13 +4,13 @@ export function handleRecipeSelecting(recipesList: Recipe[], id: number) {
     return recipesList[id];
 }
 
-export function handleRecipeAddition(recipesList: Recipe[], newRecipe: Recipe) {
+export function handleRecipeAdding(recipesList: Recipe[], newRecipe: Recipe) {
     recipesList.push(newRecipe);
 
     return recipesList;
 }
 
-export function handleRecipeDeletion(recipesList: Recipe[], id: number) {
+export function handleRecipeDeleting(recipesList: Recipe[], id: number) {
     recipesList.splice(id, 1);
 
     return recipesList;

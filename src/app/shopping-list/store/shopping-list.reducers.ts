@@ -21,20 +21,15 @@ export function shoppingListReducer(state = initialState, action: ShoppingListAc
     const ingredientsList = state.ingredientsList.slice();
 
     switch (action.type) {
-        case ShoppingListActions.ADD_INGREDIENT:
+        case ShoppingListActions.ADD_INGREDIENTS:
             return {
                 ...state,
-                ingredientsList: ShoppingListActionHandlers.handleIngredientAddition(ingredientsList, action.payload)
-            };
-        case ShoppingListActions.ADD_SEVERAL_INGREDIENTS:
-            return {
-                ...state,
-                ingredientsList: ShoppingListActionHandlers.handleSeveralIngredientsAddition(ingredientsList, action.payload)
+                ingredientsList: ShoppingListActionHandlers.handleIngredientAdding(ingredientsList, action.payload)
             };
         case ShoppingListActions.DELETE_INGREDIENT:
             return {
                 ...state,
-                ingredientsList: ShoppingListActionHandlers.handleIngredientDeletion(ingredientsList, action.payload),
+                ingredientsList: ShoppingListActionHandlers.handleIngredientDeleting(ingredientsList, action.payload),
                 selectedIngredient: null,
                 isEditMode: false
             };
@@ -48,7 +43,7 @@ export function shoppingListReducer(state = initialState, action: ShoppingListAc
         case ShoppingListActions.SELECT_INGREDIENT:
             return {
                 ...state,
-                selectedIngredient: ShoppingListActionHandlers.handleIngredientSelection(ingredientsList, action.payload),
+                selectedIngredient: ShoppingListActionHandlers.handleIngredientSelecting(ingredientsList, action.payload),
                 isEditMode: true
             };
         case ShoppingListActions.DISABLE_EDIT_MODE:

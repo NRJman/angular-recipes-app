@@ -56,12 +56,12 @@ export function recipesReducer(state: State = initialState, action: RecipesActio
         case RecipesActions.ADD_RECIPE:
             return {
                 ...state,
-                recipesList: RecipesActionHandlers.handleRecipeAddition(recipesList, action.payload)
+                recipesList: RecipesActionHandlers.handleRecipeAdding(recipesList, action.payload)
             };
         case RecipesActions.DELETE_RECIPE:
             return {
                 ...state,
-                recipesList: RecipesActionHandlers.handleRecipeDeletion(recipesList, action.payload)
+                recipesList: RecipesActionHandlers.handleRecipeDeleting(recipesList, action.payload)
             };
         case RecipesActions.MODIFY_RECIPE:
             return {

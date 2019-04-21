@@ -5,7 +5,7 @@ import { NgForm } from '@angular/forms';
 import { Subscription, Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import * as fromShoppingList from './../store/shopping-list.reducers';
-import { AddIngredient, DeleteIngredient, UpdateIngredient, DisableEditMode } from '../store/shopping-list.actions';
+import { AddIngredients, DeleteIngredient, UpdateIngredient, DisableEditMode } from '../store/shopping-list.actions';
 import * as fromApp from 'src/app/store/app.reducers';
 
 @Component({
@@ -30,7 +30,7 @@ export class ShoppingListEditComponent implements OnInit, OnDestroy {
           ingredientAmount = +this.amountInput.nativeElement.value,
           newIngredient = new Ingredient(ingredientName, ingredientAmount);
 
-    this.store.dispatch(new AddIngredient(newIngredient));
+    this.store.dispatch(new AddIngredients([newIngredient]));
   }
 
   onUpdateIngredient(): void {

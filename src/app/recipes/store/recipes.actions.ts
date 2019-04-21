@@ -5,6 +5,7 @@ export const SELECT_RECIPE = 'SELECT_RECIPE';
 export const ADD_RECIPE = 'ADD_RECIPE';
 export const DELETE_RECIPE = 'DELETE_RECIPE';
 export const MODIFY_RECIPE = 'MODIFY_RECIPE';
+export const START_MOVING_TO_SHOPPING_LIST = 'START_MOVING_TO_SHOPPING_LIST';
 
 export class SelectRecipe implements Action {
     readonly type = SELECT_RECIPE;
