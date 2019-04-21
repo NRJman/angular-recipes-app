@@ -13,6 +13,8 @@ import { RecipeEditComponent } from './recipe-edit/recipe-edit.component';
 import { RecipeStartComponent } from './recipe-start/recipe-start.component';
 import { AuthGuard } from '../auth/auth-guard.service';
 import { reducers } from './store/recipes.reducers';
+import { EffectsModule } from '@ngrx/effects';
+import { RecipesEffects } from './store/recipes.effects';
 
 @NgModule({
     declarations: [
@@ -28,7 +30,8 @@ import { reducers } from './store/recipes.reducers';
         ReactiveFormsModule,
         SharedModule,
         RecipesRoutingModule,
-        StoreModule.forFeature('recipes', reducers)
+        StoreModule.forFeature('recipes', reducers),
+        EffectsModule.forFeature([RecipesEffects])
     ],
     providers: [
         AuthGuard

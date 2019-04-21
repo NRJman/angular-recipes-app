@@ -65,8 +65,8 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
             recipeFormCopy.value['ingredients']
           );
 
+    this.recipeForm.reset();
     this.store.dispatch(new RecipesActions.AddRecipe(newRecipe));
-    // this.router.navigate(['/recipe-book']);
   }
 
   modifyExistingRecipe(): void {
@@ -79,6 +79,7 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
             recipeFormCopy.value['ingredients']
           );
 
+    this.recipeForm.reset();
     this.store.dispatch(new RecipesActions.ModifyRecipe({ id: this.currentRecipeId, newRecipeValue: updatedRecipe }));
     // this.router.navigate(['/recipe-book', this.currentRecipeId]);
   }
