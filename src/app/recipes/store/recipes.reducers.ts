@@ -68,6 +68,12 @@ export function recipesReducer(state: State = initialState, action: RecipesActio
                 ...state,
                 recipesList: RecipesActionHandlers.handleRecipeModifying(recipesList, action.payload.id, action.payload.newRecipeValue)
             };
+        case RecipesActions.RESET_RECIPES:
+            return {
+                ...state,
+                recipesList: action.payload,
+                selectedRecipe: null
+            };
         default:
             return state;
     }

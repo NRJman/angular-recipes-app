@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Recipe } from '../recipes.model';
-import { RecipesService } from './../recipes.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import * as fromApp from 'src/app/store/app.reducers';
@@ -20,7 +19,6 @@ export class RecipeDetailComponent implements OnInit {
   selectedRecipe: Recipe;
 
   constructor(
-    private recipesService: RecipesService,
     private route: ActivatedRoute,
     private router: Router,
     private store: Store<fromRecipes.FeatureState>

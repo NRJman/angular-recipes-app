@@ -1,10 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { RecipesServerService } from '../../shared/recipes-server.service';
-import { RecipesService } from '../../recipes/recipes.service';
-import { Router } from '@angular/router';
-import { HttpEvent, HttpEventType } from '@angular/common/http';
 import * as fromApp from 'src/app/store/app.reducers';
 import * as fromAuth from 'src/app/auth/store/auth.reducers';
+import * as RecipesActions from './../../recipes/store/recipes.actions';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import { StartSignOut } from 'src/app/auth/store/auth.actions';
@@ -20,27 +17,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private isAuthenticatedSubscription: Subscription;
 
     constructor(
-        private recipesServerService: RecipesServerService,
-        private recipesService: RecipesService,
-        private router: Router,
         public store: Store<fromApp.State>
     ) { }
 
     onSaveData() {
-        this.recipesServerService.saveRecipes().subscribe(
-            (response: HttpEvent<Object>) => {
-                console.log(response.type === HttpEventType.Sent);
-            }
-        );
+        this.store.dispatch(new RecipesActions.StoreRecipes());
     }
 
     onFetchData() {
-        const recipesServiceCopy = this.recipesService;
-
-        this.recipesServerService.getRecipes().subscribe((data) => {
-            recipesServiceCopy.recipesList = data;
-            recipesServiceCopy.updateRecipesList.next(recipesServiceCopy.recipesList);
-        });
+        this.store.dispatch(new RecipesActions.FetchRecipes());
     }
 
     onLogout() {

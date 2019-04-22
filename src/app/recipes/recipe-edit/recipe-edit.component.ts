@@ -3,8 +3,6 @@ import { Recipe } from '../recipes.model';
 import { ActivatedRoute, Data, Router } from '@angular/router';
 import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
 import { Subscription, Observable } from 'rxjs';
-import { RecipesService } from '../recipes.service';
-import { CanDeactivateGuard } from './can-deactivate.service';
 import { Store } from '@ngrx/store';
 import * as fromRecipes from './../store/recipes.reducers';
 import * as RecipesActions from './../store/recipes.actions';
@@ -24,7 +22,6 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private recipesService: RecipesService,
     private store: Store<fromRecipes.FeatureState>
   ) { }
 
@@ -56,8 +53,7 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
   }
 
   addNewRecipe(): void {
-    const recipesServiceCopy = this.recipesService,
-          recipeFormCopy = this.recipeForm,
+    const recipeFormCopy = this.recipeForm,
           newRecipe = new Recipe(
             recipeFormCopy.value['name'],
             recipeFormCopy.value['description'],
@@ -70,8 +66,7 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
   }
 
   modifyExistingRecipe(): void {
-    const recipesServiceCopy = this.recipesService,
-          recipeFormCopy = this.recipeForm,
+    const recipeFormCopy = this.recipeForm,
           updatedRecipe = new Recipe(
             recipeFormCopy.value['name'],
             recipeFormCopy.value['description'],
@@ -81,7 +76,6 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
 
     this.recipeForm.reset();
     this.store.dispatch(new RecipesActions.ModifyRecipe({ id: this.currentRecipeId, newRecipeValue: updatedRecipe }));
-    // this.router.navigate(['/recipe-book', this.currentRecipeId]);
   }
 
   canDeactivate(): Promise<boolean> | Observable<boolean> | boolean {
