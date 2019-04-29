@@ -2,3 +2,22 @@
     left: initial;
     right: 0;
 }
+.navbar-collapse {
+    overflow: hidden;
+}
+.collapse {
+    display: block;
+    height: 0;
+}
+.navbar-toggler:focus {
+    outline: 0;
+}
+.nav-link {
+    user-select: none;
+}
+
+@media (min-width: 992px) {
+    .collapse {
+        height: initial;
+    }
+}
