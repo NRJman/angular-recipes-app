@@ -53,14 +53,17 @@
         
         <div
           *ngIf="recipeForm.get('ingredients').controls.length > 0"
-          formArrayName="ingredients">
+          formArrayName="ingredients"
+          [@ingredientState]>
 
           <label>Ingredients</label>
       
           <div
             class="row form-group" 
             *ngFor="let ingredient of recipeForm.get('ingredients').controls; let i = index;"
-            [formGroupName]="i">
+            [formGroupName]="i"
+            [@ingredientState]
+            >
             
             <div class="col-8">
               <input type="text" class="form-control" formControlName="name">

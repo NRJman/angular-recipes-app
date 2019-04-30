@@ -2,9 +2,6 @@
     left: initial;
     right: 0;
 }
-.navbar-collapse {
-    overflow: hidden;
-}
 .collapse {
     display: block;
     height: 0;
@@ -19,5 +16,14 @@
 @media (min-width: 992px) {
     .collapse {
         height: initial;
+    }
+    .navbar-collapse {
+        height: auto !important;
+    }
+}
+
+@media (max-width: 991px) {
+    .navbar-collapse {
+        overflow: hidden;
     }
 }

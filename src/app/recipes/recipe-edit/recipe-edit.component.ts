@@ -6,11 +6,13 @@ import { Subscription, Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import * as fromRecipes from './../store/recipes.reducers';
 import * as RecipesActions from './../store/recipes.actions';
+import { ingredientDisappearAnimation } from './recipe-edit.animations';
 
 @Component({
   selector: 'app-recipe-edit',
   templateUrl: './recipe-edit.component.html',
-  styleUrls: ['./recipe-edit.component.css']
+  styleUrls: ['./recipe-edit.component.css'],
+  animations: [ingredientDisappearAnimation]
 })
 export class RecipeEditComponent implements OnInit, OnDestroy {
   public recipe: Recipe;
