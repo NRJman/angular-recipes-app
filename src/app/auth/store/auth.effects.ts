@@ -1,27 +1,34 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import * as fromAuthActions from './auth.actions';
-import { map, switchMap, tap, catchError } from 'rxjs/operators';
+import { map, switchMap, tap, catchError, withLatestFrom } from 'rxjs/operators';
 import * as firebase from 'firebase';
 import { from, of } from 'rxjs';
 import { Router } from '@angular/router';
+import * as fromApp from 'src/app/store/app.reducers';
+import { Store } from '@ngrx/store';
+import { getRoutingState, getRouteSnapshot, getQueryParams } from 'src/app/routing/store/routing.selectors';
+import * as fromRouting from './../../routing/store/routing.serializer';
 
 @Injectable()
 export class AuthEffects {
-    constructor(private actions$: Actions, private router: Router) { }
+    constructor(private actions$: Actions, private router: Router, private store$: Store<fromApp.State>) { }
 
     @Effect()
     signUp$ = this.actions$.pipe(
         ofType(fromAuthActions.START_SIGN_UP),
-        map((action: fromAuthActions.StartSignUp) => {
-            return action.payload;
+        withLatestFrom(this.store$.select(getQueryParams)),
+        map(([action, queryParams]: [fromAuthActions.StartSignUp, object]) => {
+            return [action.payload, queryParams];
         }),
-        switchMap((formData: fromAuthActions.FormData) => {
+        switchMap(([formData, queryParams]: [fromAuthActions.FormData, object]) => {
             return from(firebase.auth().createUserWithEmailAndPassword(formData.email, formData.password)).pipe(
                 switchMap(() => {
                     return from(firebase.auth().currentUser.getIdToken());
                 }),
                 switchMap((token: string) => {
+                    const urlToGetBack = (<{getBackTo: string}>queryParams).getBackTo;
+
                     return [
                         {
                             type: fromAuthActions.SET_TOKEN,
@@ -32,7 +39,7 @@ export class AuthEffects {
                         },
                         {
                             type: fromAuthActions.NAVIGATE,
-                            payload: ''
+                            payload: (urlToGetBack) ? urlToGetBack : '/'
                         }
                     ];
                 }),
@@ -55,7 +62,7 @@ export class AuthEffects {
             return action.payload;
         }),
         tap((url: string) => {
-            this.router.navigate([`/${url}`]);
+            this.router.navigate([url]);
         })
     );
 
