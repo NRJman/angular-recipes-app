@@ -3,7 +3,6 @@ import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import * as fromApp from 'src/app/store/app.reducers';
-import * as fromAuth from '../auth/store/auth.reducers';
 import { switchMap } from 'rxjs/operators';
 import { getAuthToken } from '../auth/store/auth.selectors';
 

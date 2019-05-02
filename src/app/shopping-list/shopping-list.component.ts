@@ -5,6 +5,7 @@ import { Store } from '@ngrx/store';
 import * as fromShoppingList from './store/shopping-list.reducers';
 import { SelectIngredient } from './store/shopping-list.actions';
 import * as fromApp from 'src/app/store/app.reducers';
+import { getShoppingListState } from './store/shopping-list.selectors';
 
 @Component({
   selector: 'app-shopping',
@@ -24,6 +25,6 @@ export class ShoppingListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.shoppingListState = this.store.select('shoppingList');
+    this.shoppingListState = <Observable<fromShoppingList.State>>this.store.select(getShoppingListState);
   }
 }

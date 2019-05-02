@@ -1,12 +1,13 @@
-import { Component, OnInit, ViewChild, ElementRef, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { Ingredient } from './../../shared/ingredient.model';
 import { ShoppingListService } from '../shopping-list.service';
 import { NgForm } from '@angular/forms';
-import { Subscription, Observable } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import * as fromShoppingList from './../store/shopping-list.reducers';
 import { AddIngredients, DeleteIngredient, UpdateIngredient, DisableEditMode } from '../store/shopping-list.actions';
 import * as fromApp from 'src/app/store/app.reducers';
+import { getShoppingListState } from '../store/shopping-list.selectors';
 
 @Component({
   selector: 'app-shopping-list-edit',
@@ -18,7 +19,6 @@ export class ShoppingListEditComponent implements OnInit, OnDestroy {
   @ViewChild('shoppingListForm') shoppingListForm: NgForm;
   private _selectItemSubscription: Subscription;
   public selectedIngredientId: number;
-  public shoppingListState: Observable<fromShoppingList.State> = this.store.select('shoppingList');
 
   constructor(
     private shoppingListService: ShoppingListService,
@@ -60,8 +60,7 @@ export class ShoppingListEditComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    console.log(this.shoppingListForm);
-    this._selectItemSubscription = this.store.select('shoppingList').subscribe(
+    this._selectItemSubscription = this.store.select(getShoppingListState).subscribe(
       (state: fromShoppingList.State) => {
         if (state.isEditMode) {
           this.shoppingListForm.setValue({
