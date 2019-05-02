@@ -3,11 +3,12 @@ import { Actions, Effect, ofType } from '@ngrx/effects';
 import * as fromRecipes from './recipes.reducers';
 import * as RecipesActions from './recipes.actions';
 import { switchMap, map, tap, withLatestFrom, catchError } from 'rxjs/operators';
-import { of, throwError } from 'rxjs';
+import { of, throwError, Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 import { Recipe } from '../recipes.model';
+import { getRecipesState } from './recipes.selectors';
 
 @Injectable()
 export class RecipesEffects {
@@ -69,7 +70,7 @@ export class RecipesEffects {
     })
     storeRecipes = this.actions$.pipe(
         ofType(RecipesActions.STORE_RECIPES),
-        withLatestFrom(this.store$.select('recipes')),
+        withLatestFrom(<Observable<fromRecipes.State>>this.store$.select(getRecipesState)),
         switchMap(([action, recipes]: [RecipesActions.StoreRecipes, fromRecipes.State]) => {
             const recipesList: unknown = recipes;
 

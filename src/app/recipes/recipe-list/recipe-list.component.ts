@@ -3,7 +3,7 @@ import { Recipe } from './../recipes.model';
 import { Store } from '@ngrx/store';
 import * as fromRecipes from './../store/recipes.reducers';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { getRecipesState } from '../store/recipes.selectors';
 
 @Component({
   selector: 'app-recipe-list',
@@ -17,6 +17,6 @@ export class RecipeListComponent implements OnInit {
   constructor(private store: Store<fromRecipes.FeatureState>) {}
 
   ngOnInit() {
-    this.recipesState = this.store.select('recipes');
+    this.recipesState = <Observable<fromRecipes.State>>this.store.select(getRecipesState);
   }
 }

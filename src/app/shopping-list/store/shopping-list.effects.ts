@@ -4,7 +4,8 @@ import * as ShoppingListActions from './shopping-list.actions';
 import * as fromRecipes from './../../recipes/store/recipes.reducers';
 import { map, withLatestFrom, switchMap } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
-import { of } from 'rxjs';
+import { of, Observable } from 'rxjs';
+import { getRecipesState } from 'src/app/recipes/store/recipes.selectors';
 
 @Injectable()
 export class ShoppingListEffects {
@@ -16,7 +17,7 @@ export class ShoppingListEffects {
         map((action: ShoppingListActions.TryToAddIngredients) => {
             return action.payload;
         }),
-        withLatestFrom(this.store$.select('recipes')),
+        withLatestFrom(this.store$.select(getRecipesState)),
         switchMap(([id, recipes]: [number, fromRecipes.State]) => {
             const recipesState: unknown = recipes;
 
