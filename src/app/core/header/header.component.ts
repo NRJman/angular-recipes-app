@@ -7,6 +7,7 @@ import { Observable, Subscription } from 'rxjs';
 import { StartSignOut } from 'src/app/auth/store/auth.actions';
 import { trigger } from '@angular/animations';
 import { navbarCollapseAnimation } from './header.animations';
+import { getAuthState } from 'src/app/auth/store/auth.selectors';
 
 @Component({
     selector: 'app-header',
@@ -15,7 +16,7 @@ import { navbarCollapseAnimation } from './header.animations';
     animations: [navbarCollapseAnimation]
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-    public authState: Observable<fromAuth.State> = this.store.select('auth');
+    public authState: Observable<fromAuth.State> = <Observable<fromAuth.State>>this.store.select(getAuthState);
     public isAuthenticated: boolean;
     private isAuthenticatedSubscription: Subscription;
     private navbarState: string;
