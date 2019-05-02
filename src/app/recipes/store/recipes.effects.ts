@@ -95,7 +95,7 @@ export class RecipesEffects {
         switchMap(() => {
             return this.http.get<Recipe[]>('https://angular-recipes-app-database.firebaseio.com/recipes.json', {
                 observe: 'body',        // here is just to show how to
-                responseType: 'json'   // use request configuration object
+                responseType: 'json'   // use a request configuration object
             }).pipe(
                 map((recipes: Recipe[]) => {
                     for (const recipe of recipes) {

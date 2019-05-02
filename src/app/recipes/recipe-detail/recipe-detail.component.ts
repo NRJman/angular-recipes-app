@@ -7,6 +7,7 @@ import * as fromRecipes from './../store/recipes.reducers';
 import * as RecipesActions from './../store/recipes.actions';
 import * as ShoppingListActions from './../../shopping-list/store/shopping-list.actions';
 import { Observable } from 'rxjs';
+import { getRecipesState } from '../store/recipes.selectors';
 
 @Component({
   selector: 'app-recipe-detail',
@@ -37,7 +38,7 @@ export class RecipeDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.recipesState = this.store.select('recipes');
+    this.recipesState = <Observable<fromRecipes.State>>this.store.select(getRecipesState);
 
     this.route.params.subscribe((params: Params) => {
       this.selectedRecipeId = params['id'];

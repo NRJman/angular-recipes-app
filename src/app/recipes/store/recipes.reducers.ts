@@ -71,8 +71,7 @@ export function recipesReducer(state: State = initialState, action: RecipesActio
         case RecipesActions.RESET_RECIPES:
             return {
                 ...state,
-                recipesList: action.payload,
-                selectedRecipe: null
+                recipesList: action.payload
             };
         default:
             return state;
