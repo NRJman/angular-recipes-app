@@ -8,7 +8,7 @@ import { CoreModule } from './core/core.module';
 import { ShoppingListModule } from './shopping-list/shopping-list.module';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
-import { StoreRouterConnectingModule } from '@ngrx/router-store';
+import { StoreRouterConnectingModule, RouterStateSerializer } from '@ngrx/router-store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 import { reducers } from './store/app.reducers';
@@ -16,6 +16,7 @@ import { AppComponent } from './app.component';
 import { AuthEffects } from './auth/store/auth.effects';
 import { environment } from 'src/environments/environment';
 import { ShoppingListEffects } from './shopping-list/store/shopping-list.effects';
+import { CustomSerializer } from './routing/store/routing.serializer';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,7 @@ import { ShoppingListEffects } from './shopping-list/store/shopping-list.effects
     StoreRouterConnectingModule,
     (!environment.production) ? StoreDevtoolsModule.instrument() : []
   ],
-  providers: [],
+  providers: [{ provide: RouterStateSerializer, useClass: CustomSerializer }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
