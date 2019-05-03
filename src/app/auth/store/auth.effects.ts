@@ -53,41 +53,21 @@ export class AuthEffects {
         })
     );
 
-    @Effect({
-        dispatch: false
-    })
-    navigate$ = this.actions$.pipe(
-        ofType(fromAuthActions.NAVIGATE),
-        map((action: fromAuthActions.FailAuth) => {
-            return action.payload;
-        }),
-        tap((url: string) => {
-            this.router.navigate([url]);
-        })
-    );
-
-    @Effect({
-        dispatch: false
-    })
-    failAuth$ = this.actions$.pipe(
-        ofType(fromAuthActions.FAIL_AUTH),
-        tap((error) => {
-            console.log(error);
-        })
-    );
-
     @Effect()
     signIn$ = this.actions$.pipe(
         ofType(fromAuthActions.START_SIGN_IN),
-        map((action: fromAuthActions.StartSignIn) => {
-            return action.payload;
+        withLatestFrom(this.store$.select(getQueryParams)),
+        map(([action, queryParams]: [fromAuthActions.StartSignIn, object]) => {
+            return [action.payload, queryParams];
         }),
-        switchMap((formData: fromAuthActions.FormData) => {
+        switchMap(([formData, queryParams]: [fromAuthActions.FormData, object]) => {
             return from(firebase.auth().signInWithEmailAndPassword(formData.email, formData.password)).pipe(
                 switchMap(() => {
                     return firebase.auth().currentUser.getIdToken()
                 }),
                 switchMap((token: string) => {
+                    const urlToGetBack = (<{getBackTo: string}>queryParams).getBackTo;
+
                     return [
                         {
                             type: fromAuthActions.SET_TOKEN,
@@ -98,7 +78,7 @@ export class AuthEffects {
                         },
                         {
                             type: fromAuthActions.NAVIGATE,
-                            payload: 'recipe-book'
+                            payload: (urlToGetBack) ? urlToGetBack : '/recipe-book'
                         }
                     ];
                 }),
@@ -135,6 +115,29 @@ export class AuthEffects {
                     });
                 })
             );
+        })
+    );
+
+    @Effect({
+        dispatch: false
+    })
+    navigate$ = this.actions$.pipe(
+        ofType(fromAuthActions.NAVIGATE),
+        map((action: fromAuthActions.FailAuth) => {
+            return action.payload;
+        }),
+        tap((url: string) => {
+            this.router.navigate([url]);
+        })
+    );
+
+    @Effect({
+        dispatch: false
+    })
+    failAuth$ = this.actions$.pipe(
+        ofType(fromAuthActions.FAIL_AUTH),
+        tap((error) => {
+            console.log(error);
         })
     );
 }

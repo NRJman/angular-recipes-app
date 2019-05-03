@@ -6,6 +6,7 @@ import * as RecipesActionHandlers from './recipes.action-handlers';
 import * as fromApp from './../../store/app.reducers';
 import { shoppingListReducer } from 'src/app/shopping-list/store/shopping-list.reducers';
 import { authReducer } from 'src/app/auth/store/auth.reducers';
+import { routerReducer } from '@ngrx/router-store';
 
 export interface FeatureState extends fromApp.State {
     recipes: State;
@@ -14,7 +15,8 @@ export interface FeatureState extends fromApp.State {
 export const reducers: ActionReducerMap<FeatureState> = {
     recipes: recipesReducer,
     shoppingList: shoppingListReducer,
-    auth: authReducer
+    auth: authReducer,
+    routing: routerReducer
 };
 
 export interface State {
