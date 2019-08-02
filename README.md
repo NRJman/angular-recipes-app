@@ -9,7 +9,7 @@ Almost all the Angular staff including NgRx, RxJS, advance routing techniques, a
 
 ## Running
 
-Follow [this link](https://nrjman.github.io/angular-recipes-app/) to run the app.
+Clone this repo, move to the project directory, run "npm install" and "ng serve -o" after that. 
 
 ## License
 
