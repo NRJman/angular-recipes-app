@@ -1,27 +1,16 @@
-# AngularRecipesApp
+# ResortsWidget
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.8.
+This project is an Angular app sample that represents a basic recipes-shop implementation. It is possible to create custom recipes with your own ingredients, move them to a shopping-list as well as save or fetch them to a Firebase server.
 
-## Development server
+## What have been practiced?
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Actually, not styling :)
+Almost all the Angular staff including NgRx, RxJS, advance routing techniques, authentication, interceptors, Angular animations, forms, pipes, directives and more...
 
-## Code scaffolding
+## Running
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Follow [this link](https://nrjman.github.io/angular-recipes-app/) to run the app.
 
-## Build
+## License
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+There is no any license for it. You can use any data from this repo if you want so :)
