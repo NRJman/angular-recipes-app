@@ -5,7 +5,7 @@ This project is an Angular app sample that represents a basic recipes-shop imple
 ## What have been practiced?
 
 Actually, not styling :)
-Almost all the Angular staff including NgRx, RxJS, advance routing techniques, authentication, interceptors, Angular animations, forms, pipes, directives and more...
+Almost all the Angular staff including NgRx, RxJS, advanced routing techniques, authentication, interceptors, Angular animations, forms, pipes, directives and more...
 
 ## Running
 
